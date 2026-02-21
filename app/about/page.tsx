@@ -101,11 +101,11 @@ export default function AboutPage() {
       <Navbar />
 
       {/* Sticky Container for Hero and Van Section */}
-      <div className="h-[170vh] relative">
+      <div className="h-auto lg:h-[170vh] relative">
         {/* About Hero - Two Column Layout - Sticky */}
-        <section ref={heroRef} className="lg:sticky lg:top-0 z-10 pt-28 pb-20 lg:pt-35 lg:pb-24 min-h-screen flex items-center bg-gradient-to-b from-[var(--royal-red)] to-[var(--royal-red-dark)]">
+        <section ref={heroRef} className="lg:sticky lg:top-0 z-10 pt-32 pb-16 lg:pt-35 lg:pb-24 min-h-[auto] lg:min-h-screen flex items-center bg-gradient-to-b from-[var(--royal-red)] to-[var(--royal-red-dark)]">
         <div className="container">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-0 lg:gap-16 items-center">
             {/* Left Column - Content */}
             <div className={`text-center lg:text-left transition-all duration-700 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-2">
@@ -166,7 +166,7 @@ export default function AboutPage() {
       </section>
 
         {/* Black Section - Van Animation - Scrolls over hero */}
-        <section ref={vanSectionRef} className="pt-12 pb-12 lg:pt-24 lg:pb-45 relative z-20 min-h-[70vh] lg:min-h-[80vh] bg-[var(--royal-dark)] flex items-center justify-center overflow-hidden shadow-[0_-25px_1000px_20px_rgba(0,0,0,0.6),0_35px_1000px_20px_rgba(0,0,0,0.5)]">
+        <section ref={vanSectionRef} className="pt-12 pb-12 lg:pt-24 lg:pb-45 relative z-20 min-h-[70vh] lg:min-h-[80vh] bg-[var(--royal-dark)] flex items-center justify-center overflow-hidden shadow-[0_-10px_60px_5px_rgba(0,0,0,0.3),0_10px_60px_5px_rgba(0,0,0,0.2)] lg:shadow-[0_-25px_1000px_20px_rgba(0,0,0,0.6),0_35px_1000px_20px_rgba(0,0,0,0.5)]">
         <div className="container relative">
           {/* Hidden Message - Revealed by van (from right to left) */}
           <div className="text-center relative z-20 hidden lg:block">
@@ -216,9 +216,9 @@ export default function AboutPage() {
       </div>
 
       {/* Our Values */}
-      <section ref={storyRef} className="py-24 lg:py-28 bg-white relative z-30">
+      <section ref={storyRef} className="pt-24 pb-12 lg:py-28 bg-white relative z-30">
         <div className="max-w-[1200px] mx-auto px-6">
-          <div className="grid lg:grid-cols-[55%_45%] gap-12 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-[55%_45%] gap-6 lg:gap-16 items-center">
             {/* Left - Content */}
             <div>
               <h2 className="text-3xl lg:text-4xl font-bold text-[var(--royal-dark)] mb-4">
