@@ -475,7 +475,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
       <Navbar />
 
       {/* Hero Section - Sticky */}
-      <section className="sticky top-0 pt-28 pb-16 lg:pt-40 lg:pb-24 min-h-[85vh] flex items-center bg-gradient-to-b from-[var(--royal-red)] via-[var(--royal-red-dark)] to-[var(--royal-red-dark)] z-10">
+      <section className="lg:sticky lg:top-0 pt-28 pb-16 lg:pt-40 lg:pb-24 min-h-[85vh] flex items-center bg-gradient-to-b from-[var(--royal-red)] via-[var(--royal-red-dark)] to-[var(--royal-red-dark)] z-10">
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Content */}

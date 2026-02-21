@@ -154,7 +154,7 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="sticky top-0 pt-7 lg:pt-14 pb-30 lg:pb-48 relative bg-gradient-to-b from-[var(--royal-red)] via-[var(--royal-red-dark)] to-[var(--royal-red-dark)] overflow-hidden z-10">
+      <section className="lg:sticky lg:top-0 pt-7 lg:pt-14 pb-30 lg:pb-48 relative bg-gradient-to-b from-[var(--royal-red)] via-[var(--royal-red-dark)] to-[var(--royal-red-dark)] overflow-hidden z-10">
         <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-1 lg:py-16 xl:py-24">
           <div className="grid lg:grid-cols-2 gap-0 lg:gap-12 items-center">
             {/* Van Image - First on Mobile */}

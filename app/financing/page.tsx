@@ -69,7 +69,7 @@ export default function Financing() {
       <Navbar />
       
       {/* Hero Section - Sticky */}
-      <section className="sticky top-0 pt-40 pb-6 lg:pt-28 lg:pb-14 min-h-[auto] flex items-center bg-gradient-to-b from-[var(--royal-red)] via-[var(--royal-red-dark)] to-[var(--royal-red-dark)] z-10">
+      <section className="lg:sticky lg:top-0 pt-40 pb-6 lg:pt-28 lg:pb-14 min-h-[auto] flex items-center bg-gradient-to-b from-[var(--royal-red)] via-[var(--royal-red-dark)] to-[var(--royal-red-dark)] z-10">
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-4 lg:gap-16 items-center">
               {/* Content */}

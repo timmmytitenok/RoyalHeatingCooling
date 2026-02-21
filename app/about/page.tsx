@@ -103,7 +103,7 @@ export default function AboutPage() {
       {/* Sticky Container for Hero and Van Section */}
       <div className="h-[170vh] relative">
         {/* About Hero - Two Column Layout - Sticky */}
-        <section ref={heroRef} className="sticky top-0 z-10 pt-28 pb-20 lg:pt-35 lg:pb-24 min-h-screen flex items-center bg-gradient-to-b from-[var(--royal-red)] to-[var(--royal-red-dark)]">
+        <section ref={heroRef} className="lg:sticky lg:top-0 z-10 pt-28 pb-20 lg:pt-35 lg:pb-24 min-h-screen flex items-center bg-gradient-to-b from-[var(--royal-red)] to-[var(--royal-red-dark)]">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left Column - Content */}
