@@ -185,23 +185,23 @@ export default function Home() {
               <p className="text-[var(--royal-red)] font-medium text-xs lg:text-sm mb-4 lg:mb-6 animate-fade-up-3 text-center lg:text-left hidden lg:block">
                 Fast, reliable heating & cooling — same-day service available.
               </p>
-              <p className="text-gray-600 text-sm lg:text-base mb-4 lg:mb-6 leading-relaxed animate-fade-up-4 text-center lg:text-left">
+              <p className="text-gray-600 text-sm lg:text-base mb-6 lg:mb-6 leading-relaxed animate-fade-up-4 text-center lg:text-left">
                 <span className="hidden lg:inline">Fast repairs. Honest pricing. Done right the first time.<br />We keep your home comfortable — guaranteed.</span>
                 <span className="lg:hidden">Fast repairs. Honest pricing. Done right.<br />We keep your home comfortable guaranteed.</span>
               </p>
 
               {/* Trust Pills */}
-              <div className="flex flex-wrap justify-center lg:justify-start gap-1.5 lg:gap-2 mb-6 lg:mb-8 animate-fade-up-5">
-                <span className="feature-pill text-[9px] lg:text-xs py-0.5 lg:py-1.5 px-1.5 lg:px-3">
-                  <span className="w-1 h-1 lg:w-1.5 lg:h-1.5 bg-[var(--royal-gold)] rounded-full"></span>
+              <div className="hidden lg:flex flex-wrap justify-start gap-2 mb-8 animate-fade-up-5">
+                <span className="feature-pill text-xs py-1.5 px-3">
+                  <span className="w-1.5 h-1.5 bg-[var(--royal-gold)] rounded-full"></span>
                   Same-Day Service
                 </span>
-                <span className="feature-pill text-[9px] lg:text-xs py-0.5 lg:py-1.5 px-1.5 lg:px-3">
-                  <span className="w-1 h-1 lg:w-1.5 lg:h-1.5 bg-[var(--royal-gold)] rounded-full"></span>
+                <span className="feature-pill text-xs py-1.5 px-3">
+                  <span className="w-1.5 h-1.5 bg-[var(--royal-gold)] rounded-full"></span>
                   Locally Owned
                 </span>
-                <span className="feature-pill text-[9px] lg:text-xs py-0.5 lg:py-1.5 px-1.5 lg:px-3 !hidden lg:!inline-flex">
-                  <span className="w-1 h-1 lg:w-1.5 lg:h-1.5 bg-[var(--royal-gold)] rounded-full"></span>
+                <span className="feature-pill text-xs py-1.5 px-3">
+                  <span className="w-1.5 h-1.5 bg-[var(--royal-gold)] rounded-full"></span>
                   Upfront Pricing
                 </span>
               </div>
