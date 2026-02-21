@@ -191,17 +191,17 @@ export default function Home() {
               </p>
 
               {/* Trust Pills */}
-              <div className="flex flex-wrap justify-center lg:justify-start gap-2 mb-6 lg:mb-8 animate-fade-up-5">
-                <span className="feature-pill text-[10px] lg:text-xs py-1 lg:py-1.5 px-2 lg:px-3">
-                  <span className="w-1.5 h-1.5 bg-[var(--royal-gold)] rounded-full"></span>
+              <div className="flex flex-wrap justify-center lg:justify-start gap-1.5 lg:gap-2 mb-6 lg:mb-8 animate-fade-up-5">
+                <span className="feature-pill text-[9px] lg:text-xs py-0.5 lg:py-1.5 px-1.5 lg:px-3">
+                  <span className="w-1 h-1 lg:w-1.5 lg:h-1.5 bg-[var(--royal-gold)] rounded-full"></span>
                   Same-Day Service
                 </span>
-                <span className="feature-pill text-[10px] lg:text-xs py-1 lg:py-1.5 px-2 lg:px-3">
-                  <span className="w-1.5 h-1.5 bg-[var(--royal-gold)] rounded-full"></span>
+                <span className="feature-pill text-[9px] lg:text-xs py-0.5 lg:py-1.5 px-1.5 lg:px-3">
+                  <span className="w-1 h-1 lg:w-1.5 lg:h-1.5 bg-[var(--royal-gold)] rounded-full"></span>
                   Locally Owned
                 </span>
-                <span className="feature-pill text-[10px] lg:text-xs py-1 lg:py-1.5 px-2 lg:px-3 !hidden lg:!inline-flex">
-                  <span className="w-1.5 h-1.5 bg-[var(--royal-gold)] rounded-full"></span>
+                <span className="feature-pill text-[9px] lg:text-xs py-0.5 lg:py-1.5 px-1.5 lg:px-3 !hidden lg:!inline-flex">
+                  <span className="w-1 h-1 lg:w-1.5 lg:h-1.5 bg-[var(--royal-gold)] rounded-full"></span>
                   Upfront Pricing
                 </span>
               </div>
@@ -473,7 +473,8 @@ export default function Home() {
           <div className={`text-center mb-6 lg:mb-10 transition-all duration-700 ${brandsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <span className="section-label text-xs lg:text-sm">Brands We Work With</span>
             <h2 className="text-xl lg:text-2xl font-bold text-[var(--royal-dark)] mt-2">
-              Trusted Industry-Leading Brands
+              <span className="lg:hidden">Industry-Leading Brands</span>
+              <span className="hidden lg:inline">Trusted Industry-Leading Brands</span>
             </h2>
           </div>
           <div className="flex flex-wrap justify-center items-center gap-4 lg:gap-8 lg:gap-16">

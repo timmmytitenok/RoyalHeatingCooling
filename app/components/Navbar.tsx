@@ -84,18 +84,14 @@ export default function Navbar() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
-      // Different thresholds for mobile vs desktop
-      const isMobile = window.innerWidth < 1024; // lg breakpoint
-      const threshold = isMobile ? 800 : 300;
+      const isMobile = window.innerWidth < 1024;
+      const threshold = isMobile ? 50 : 300;
       
-      // Don't hide until scrolled past threshold
       if (currentScrollY < threshold) {
         setIsVisible(true);
       } else if (currentScrollY > lastScrollY && currentScrollY > threshold) {
-        // Scrolling down (and past threshold)
         setIsVisible(false);
       } else {
-        // Scrolling up
         setIsVisible(true);
       }
       

@@ -120,7 +120,7 @@ export default function AboutPage() {
                 </span>
               </h2>
               
-              <p className="text-lg text-gray-400 leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0">
+              <p className="text-sm lg:text-lg text-gray-400 leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0">
                 We&apos;re not a big corporation — we&apos;re your neighbors. A local, 
                 family-run HVAC company that believes in doing the job right, 
                 being upfront about pricing, and treating every home like our own.
