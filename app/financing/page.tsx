@@ -171,7 +171,7 @@ export default function Financing() {
 
               <h2 className="text-xl lg:text-3xl font-extrabold tracking-tight text-[var(--royal-dark)] mb-4 leading-tight lg:whitespace-nowrap">
                 Financing Options for Your Needs
-              </h2>
+        </h2>
 
               <p className="text-gray-600 text-sm lg:text-lg leading-relaxed mb-4">
                 We know investing in your home comfort system is a big decision. Whether you&apos;re replacing an older unit, upgrading efficiency, or handling an unexpected repair, upfront costs shouldn&apos;t stand in the way of reliable heating and cooling.
@@ -183,12 +183,12 @@ export default function Financing() {
 
               {/* CTA Row */}
               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                <button
+          <button
                   onClick={openFinancingModal}
                   className="inline-flex items-center justify-center rounded-xl bg-[var(--royal-red)] px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-[var(--royal-red-dark)] hover:shadow-lg hover:scale-105 active:scale-95"
-                >
+          >
                   Contact Our Team
-                </button>
+          </button>
                 <span className="text-sm text-gray-500">
                   Questions? We&apos;ll help you choose the best plan.
                 </span>
@@ -299,8 +299,8 @@ export default function Financing() {
             </p>
             
             <div className={`flex flex-col sm:flex-row justify-center gap-4 transition-all duration-700 delay-200 ${ctaVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-8 blur-sm'}`}>
-              <a 
-                href="tel:3306621123" 
+          <a
+            href="tel:3306621123"
                 className="group relative overflow-hidden inline-flex items-center justify-center gap-3 bg-white text-[var(--royal-red)] px-10 py-4 rounded-full font-bold text-base lg:text-lg shadow-lg hover:shadow-2xl transition-all duration-300 ease-out hover:scale-110 hover:bg-[var(--royal-gold)] hover:text-white active:scale-95 active:shadow-md w-full sm:w-auto"
               >
                 <svg className="w-5 h-5 lg:w-6 lg:h-6 relative z-10 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
@@ -322,7 +322,7 @@ export default function Financing() {
             </div>
 
             <p className={`text-white/60 text-xs lg:text-sm mt-6 lg:mt-8 transition-all duration-700 delay-300 ${ctaVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-8 blur-sm'}`}>
-              Available 24/7 for emergencies • Same-day service available
+              Same-day service available
             </p>
           </div>
         </div>
@@ -513,8 +513,8 @@ export default function Financing() {
                 © {new Date().getFullYear()} Royal Heating and Cooling. All Rights Reserved.
               </p>
             </div>
-          </div>
         </div>
+      </div>
       </footer>
     </div>
   );

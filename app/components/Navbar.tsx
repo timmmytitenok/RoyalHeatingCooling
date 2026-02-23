@@ -301,9 +301,9 @@ export default function Navbar() {
                 className="flex flex-col items-center justify-center w-12 h-12 gap-1.5 transition-all duration-300"
                 aria-label="Toggle menu"
               >
-                <span className={`block w-7 h-0.5 bg-[var(--royal-dark)] rounded-full transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-                <span className={`block w-7 h-0.5 bg-[var(--royal-dark)] rounded-full transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
-                <span className={`block w-7 h-0.5 bg-[var(--royal-dark)] rounded-full transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+                <span className={`block w-7 h-0.5 bg-[var(--royal-dark)] rounded-full transition-all duration-300 origin-center ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+                <span className={`block w-7 h-0.5 bg-[var(--royal-dark)] rounded-full transition-all duration-300 origin-center ${isMobileMenuOpen ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100'}`}></span>
+                <span className={`block w-7 h-0.5 bg-[var(--royal-dark)] rounded-full transition-all duration-300 origin-center ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
               </button>
             </div>
           </div>
@@ -320,7 +320,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div 
-        className={`fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white z-50 lg:hidden transform transition-transform duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+        className={`fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white/80 backdrop-blur-xl z-50 lg:hidden transform transition-transform duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         onTouchStart={handleTouchStart}
@@ -536,6 +536,12 @@ export default function Navbar() {
           <div className="px-4 pb-6 pt-4 border-t border-gray-100 space-y-2.5">
             <a
               href="tel:3306621123"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setIsMobileMenuOpen(false);
+                window.location.href = 'tel:3306621123';
+              }}
               className="w-full px-5 py-3.5 bg-[var(--royal-red)] text-white rounded-xl font-semibold text-[15px] transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-2.5"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -554,7 +560,7 @@ export default function Navbar() {
               Contact Us
             </button>
             
-            <p className="text-gray-400 text-[11px] text-center pt-1">Available 24/7 for emergencies</p>
+            <p className="text-gray-400 text-[11px] text-center pt-1">Same-day service available</p>
           </div>
         </div>
       </div>

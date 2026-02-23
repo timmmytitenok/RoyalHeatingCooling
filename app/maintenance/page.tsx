@@ -547,7 +547,7 @@ export default function MaintenancePlan() {
             </div>
 
             <p className={`text-white/60 text-xs lg:text-sm mt-6 lg:mt-8 transition-all duration-700 delay-300 ${ctaVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-8 blur-sm'}`}>
-              Available 24/7 for emergencies • Same-day service available
+              Same-day service available
             </p>
           </div>
         </div>
