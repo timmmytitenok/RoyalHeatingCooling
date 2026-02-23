@@ -206,11 +206,11 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="lg:sticky lg:top-0 pt-7 lg:pt-14 pb-30 lg:pb-48 relative bg-gradient-to-b from-[var(--royal-red)] via-[var(--royal-red-dark)] to-[var(--royal-red-dark)] overflow-hidden z-10">
-        <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-1 lg:py-16 xl:py-24">
+      <section className="lg:sticky lg:top-0 pt-5 lg:pt-14 pb-24 lg:pb-48 relative bg-gradient-to-b from-[var(--royal-red)] via-[var(--royal-red-dark)] to-[var(--royal-red-dark)] overflow-hidden z-10">
+        <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-0.5 lg:py-16 xl:py-24">
           <div className="grid lg:grid-cols-2 gap-0 lg:gap-12 items-center">
             {/* Van Image - First on Mobile */}
-            <div className="relative animate-drive-in order-1 lg:order-2 translate-y-0 lg:translate-y-12 translate-x-0 lg:translate-x-12">
+            <div className="relative animate-drive-in order-1 lg:order-2 translate-y-0 lg:translate-y-12 translate-x-0 lg:translate-x-12 w-[92%] mx-auto lg:w-auto">
               <div className="relative z-30">
                 <Image
                   src="/van.png"
@@ -228,11 +228,11 @@ export default function Home() {
             </div>
 
             {/* Left Content - Second on Mobile */}
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl lg:rounded-3xl p-6 lg:p-8 xl:p-10 shadow-2xl border border-white/20 order-2 lg:order-1 translate-x-0 lg:-translate-x-4 w-full -mt-12 lg:mt-0">
+            <div className="bg-white/95 backdrop-blur-sm rounded-xl lg:rounded-3xl p-5 lg:p-8 xl:p-10 shadow-2xl border border-white/20 order-2 lg:order-1 translate-x-0 lg:-translate-x-4 w-full -mt-10 lg:mt-0">
               <span className="section-label text-xs lg:text-sm animate-fade-up-1 block text-center lg:text-left">Family Owned & Operated HVAC</span>
-              <h1 className="text-4xl lg:text-4xl xl:text-5xl font-bold text-[var(--royal-dark)] leading-tight mt-3 lg:mt-4 mb-2 lg:mb-3 animate-fade-up-2 text-center lg:text-left">
+              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[var(--royal-dark)] leading-tight mt-3 lg:mt-4 mb-2 lg:mb-3 animate-fade-up-2 text-center lg:text-left">
                 Your Comfort,<br />
-                <span className="text-4xl lg:text-4xl xl:text-5xl text-[var(--royal-red)]">Our Crown.</span>
+                <span className="text-3xl lg:text-4xl xl:text-5xl text-[var(--royal-red)]">Our Crown.</span>
               </h1>
               <p className="text-[var(--royal-red)] font-medium text-xs lg:text-sm mb-4 lg:mb-6 animate-fade-up-3 text-center lg:text-left hidden lg:block">
                 Fast, reliable heating & cooling — same-day service available.
@@ -683,12 +683,12 @@ export default function Home() {
 
       {/* Homepage Schedule Modal */}
       {isScheduleModalOpen && (
-        <div className={`fixed inset-0 z-[1200] flex items-center justify-center p-4 sm:p-6 ${isScheduleModalClosing ? 'animate-modal-fade-out' : 'animate-modal-fade-in'}`}>
+        <div className={`fixed inset-0 z-[1200] flex items-start sm:items-center justify-center p-3 sm:p-6 overflow-y-auto ${isScheduleModalClosing ? 'animate-modal-fade-out' : 'animate-modal-fade-in'}`}>
           <div
-            className={`absolute inset-0 ${isScheduleModalClosing ? 'animate-backdrop-unblur' : 'animate-backdrop-blur'}`}
+            className={`absolute inset-0 bg-black/80 ${isScheduleModalClosing ? 'lg:animate-backdrop-unblur' : 'lg:animate-backdrop-blur'}`}
             onClick={closeScheduleModal}
           />
-          <div className={`relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-3xl bg-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] border border-white/40 ${isScheduleModalClosing ? 'animate-modal-slide-down' : 'animate-modal-slide-up'}`}>
+          <div className={`relative w-full max-w-2xl max-h-[calc(100dvh-1.5rem)] sm:max-h-[92vh] overflow-y-auto rounded-2xl sm:rounded-3xl bg-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] border border-white/40 ${isScheduleModalClosing ? 'animate-modal-slide-down' : 'animate-modal-slide-up'}`}>
             {!isScheduleSubmitted ? (
               <>
                 <div className="bg-gradient-to-r from-[var(--royal-red)] to-[var(--royal-red-dark)] px-6 py-6 sm:px-8 sm:py-7">

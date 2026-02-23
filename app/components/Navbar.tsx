@@ -441,7 +441,7 @@ export default function Navbar() {
             <div className={`transition-all duration-300 ${mobileSubmenu === 'services' ? 'translate-x-0 opacity-100 pointer-events-auto' : 'translate-x-full opacity-0 absolute pointer-events-none'}`}>
               <button
                 onClick={() => setMobileSubmenu('main')}
-                className={`flex items-center gap-2 px-2 py-3 text-gray-400 text-sm font-medium transition-all duration-200 active:text-[var(--royal-red)] ${mobileSubmenu === 'services' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
+                className={`w-full flex items-center gap-2 px-4 py-3.5 rounded-xl text-gray-500 text-base font-medium transition-all duration-200 hover:bg-gray-50 active:bg-gray-100 active:text-[var(--royal-red)] ${mobileSubmenu === 'services' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
                 style={{ transitionDelay: mobileSubmenu === 'services' ? '50ms' : '0ms' }}
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -500,7 +500,7 @@ export default function Navbar() {
             <div className={`transition-all duration-300 ${mobileSubmenu === 'offers' ? 'translate-x-0 opacity-100 pointer-events-auto' : 'translate-x-full opacity-0 absolute pointer-events-none'}`}>
               <button
                 onClick={() => setMobileSubmenu('main')}
-                className={`flex items-center gap-2 px-2 py-3 text-gray-400 text-sm font-medium transition-all duration-200 active:text-[var(--royal-red)] ${mobileSubmenu === 'offers' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
+                className={`w-full flex items-center gap-2 px-4 py-3.5 rounded-xl text-gray-500 text-base font-medium transition-all duration-200 hover:bg-gray-50 active:bg-gray-100 active:text-[var(--royal-red)] ${mobileSubmenu === 'offers' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
                 style={{ transitionDelay: mobileSubmenu === 'offers' ? '50ms' : '0ms' }}
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">

@@ -752,12 +752,12 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
 
       {/* Schedule Modal */}
       {isScheduleModalOpen && (
-        <div className={`fixed inset-0 z-[1200] flex items-center justify-center p-4 sm:p-6 ${isScheduleModalClosing ? 'animate-modal-fade-out' : 'animate-modal-fade-in'}`}>
+        <div className={`fixed inset-0 z-[1200] flex items-start sm:items-center justify-center p-3 sm:p-6 overflow-y-auto ${isScheduleModalClosing ? 'animate-modal-fade-out' : 'animate-modal-fade-in'}`}>
           <div
-            className={`absolute inset-0 ${isScheduleModalClosing ? 'animate-backdrop-unblur' : 'animate-backdrop-blur'}`}
+            className={`absolute inset-0 bg-black/80 ${isScheduleModalClosing ? 'lg:animate-backdrop-unblur' : 'lg:animate-backdrop-blur'}`}
             onClick={() => closeScheduleModal(true)}
           />
-          <div className={`relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-3xl bg-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] border border-white/40 ${isScheduleModalClosing ? 'animate-modal-slide-down' : 'animate-modal-slide-up'}`}>
+          <div className={`relative w-full max-w-2xl max-h-[calc(100dvh-1.5rem)] sm:max-h-[92vh] overflow-y-auto rounded-2xl sm:rounded-3xl bg-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] border border-white/40 ${isScheduleModalClosing ? 'animate-modal-slide-down' : 'animate-modal-slide-up'}`}>
             {!isScheduleSubmitted ? (
               <>
                 <div className="bg-gradient-to-r from-[var(--royal-red)] to-[var(--royal-red-dark)] px-6 py-6 sm:px-8 sm:py-7">
