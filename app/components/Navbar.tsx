@@ -344,7 +344,7 @@ export default function Navbar() {
           {/* Menu Items */}
           <div className="flex-1 overflow-y-auto px-4 py-4">
             {/* Main Menu */}
-            <div className={`space-y-1 transition-all duration-300 ${mobileSubmenu === 'main' ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0 absolute'}`}>
+            <div className={`space-y-1 transition-all duration-300 ${mobileSubmenu === 'main' ? 'translate-x-0 opacity-100 pointer-events-auto' : '-translate-x-full opacity-0 absolute pointer-events-none'}`}>
               {/* Home */}
               <Link
                 href="/"
@@ -438,7 +438,7 @@ export default function Navbar() {
             </div>
 
             {/* Services Submenu */}
-            <div className={`transition-all duration-300 ${mobileSubmenu === 'services' ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 absolute'}`}>
+            <div className={`transition-all duration-300 ${mobileSubmenu === 'services' ? 'translate-x-0 opacity-100 pointer-events-auto' : 'translate-x-full opacity-0 absolute pointer-events-none'}`}>
               <button
                 onClick={() => setMobileSubmenu('main')}
                 className={`flex items-center gap-2 px-2 py-3 text-gray-400 text-sm font-medium transition-all duration-200 active:text-[var(--royal-red)] ${mobileSubmenu === 'services' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
@@ -497,7 +497,7 @@ export default function Navbar() {
             </div>
 
             {/* Offers Submenu */}
-            <div className={`transition-all duration-300 ${mobileSubmenu === 'offers' ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 absolute'}`}>
+            <div className={`transition-all duration-300 ${mobileSubmenu === 'offers' ? 'translate-x-0 opacity-100 pointer-events-auto' : 'translate-x-full opacity-0 absolute pointer-events-none'}`}>
               <button
                 onClick={() => setMobileSubmenu('main')}
                 className={`flex items-center gap-2 px-2 py-3 text-gray-400 text-sm font-medium transition-all duration-200 active:text-[var(--royal-red)] ${mobileSubmenu === 'offers' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
@@ -534,8 +534,8 @@ export default function Navbar() {
 
           {/* Bottom CTA */}
           <div className="px-4 pb-6 pt-4 border-t border-gray-100 space-y-2.5">
-            <a
-              href="tel:3306621123"
+            <button
+              type="button"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -548,7 +548,7 @@ export default function Navbar() {
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
               </svg>
               Call (330) 662-1123
-            </a>
+            </button>
 
             <button
               onClick={() => { setIsMobileMenuOpen(false); setTimeout(() => setIsContactModalOpen(true), 300); }}
@@ -560,7 +560,7 @@ export default function Navbar() {
               Contact Us
             </button>
             
-            <p className="text-gray-400 text-[11px] text-center pt-1">Same-day service available</p>
+            <p className="text-gray-400 text-[11px] text-center pt-1">Avalible 24/7 for emergenices</p>
           </div>
         </div>
       </div>
