@@ -113,7 +113,7 @@ export default function Renovation() {
               <div className={`relative transition-all duration-700 delay-400 ${heroVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-8 blur-sm'}`}>
                 <div className="rounded-2xl lg:rounded-[3rem] aspect-[4/3] flex items-center justify-center overflow-hidden shadow-[0_15px_40px_5px_rgba(0,0,0,0.3)] lg:shadow-[0_25px_60px_10px_rgba(0,0,0,0.4)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_30px_80px_15px_rgba(0,0,0,0.5)] cursor-pointer relative">
                   <Image
-                    src="/renovation-hero.png"
+                    src="/renovation-hero-new.png"
                     alt="HVAC Renovation"
                     fill
                     className="object-cover rounded-2xl lg:rounded-[3rem]"

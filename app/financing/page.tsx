@@ -9,6 +9,14 @@ export default function Financing() {
   const [heroVisible, setHeroVisible] = useState(false);
   const [sectionsVisible, setSectionsVisible] = useState<boolean[]>([]);
   const [ctaVisible, setCtaVisible] = useState(false);
+  const [isFinancingModalOpen, setIsFinancingModalOpen] = useState(false);
+  const [isFinancingModalClosing, setIsFinancingModalClosing] = useState(false);
+  const [isFinancingSubmitted, setIsFinancingSubmitted] = useState(false);
+  const [financingForm, setFinancingForm] = useState({
+    fullName: '',
+    phone: '',
+    email: '',
+  });
 
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
   const ctaRef = useRef<HTMLElement>(null);
@@ -63,6 +71,48 @@ export default function Financing() {
       return () => observer.disconnect();
     }
   }, []);
+
+  useEffect(() => {
+    if (!isFinancingModalOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isFinancingModalOpen]);
+
+  const resetFinancingForm = () => {
+    setFinancingForm({
+      fullName: '',
+      phone: '',
+      email: '',
+    });
+  };
+
+  const openFinancingModal = () => {
+    resetFinancingForm();
+    setIsFinancingSubmitted(false);
+    setIsFinancingModalClosing(false);
+    setIsFinancingModalOpen(true);
+  };
+
+  const closeFinancingModal = () => {
+    setIsFinancingModalClosing(true);
+    setTimeout(() => {
+      setIsFinancingModalOpen(false);
+      setIsFinancingModalClosing(false);
+      setIsFinancingSubmitted(false);
+      resetFinancingForm();
+    }, 400);
+  };
+
+  useEffect(() => {
+    if (!isFinancingSubmitted) return;
+    const timer = setTimeout(() => {
+      closeFinancingModal();
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [isFinancingSubmitted]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -133,12 +183,12 @@ export default function Financing() {
 
               {/* CTA Row */}
               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                <Link
-                  href="/contact"
+                <button
+                  onClick={openFinancingModal}
                   className="inline-flex items-center justify-center rounded-xl bg-[var(--royal-red)] px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-[var(--royal-red-dark)] hover:shadow-lg hover:scale-105 active:scale-95"
                 >
                   Contact Our Team
-                </Link>
+                </button>
                 <span className="text-sm text-gray-500">
                   Questions? We&apos;ll help you choose the best plan.
                 </span>
@@ -163,12 +213,12 @@ export default function Financing() {
                     <p className="text-sm font-semibold text-gray-900">Apply in minutes</p>
                     <p className="text-xs lg:text-sm text-gray-600">Get an estimate → Apply → Choose your plan</p>
                   </div>
-                  <Link
-                    href="/contact"
+                  <button
+                    onClick={openFinancingModal}
                     className="inline-flex items-center justify-center rounded-xl bg-[var(--royal-dark)] px-4 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-black hover:shadow-lg whitespace-nowrap"
                   >
                     Talk to a Specialist
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
@@ -248,7 +298,7 @@ export default function Financing() {
               Don&apos;t let upfront costs stand in the way of your comfort. Talk to a specialist today.
             </p>
             
-            <div className={`flex justify-center transition-all duration-700 delay-200 ${ctaVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-8 blur-sm'}`}>
+            <div className={`flex flex-col sm:flex-row justify-center gap-4 transition-all duration-700 delay-200 ${ctaVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-8 blur-sm'}`}>
               <a 
                 href="tel:3306621123" 
                 className="group relative overflow-hidden inline-flex items-center justify-center gap-3 bg-white text-[var(--royal-red)] px-10 py-4 rounded-full font-bold text-base lg:text-lg shadow-lg hover:shadow-2xl transition-all duration-300 ease-out hover:scale-110 hover:bg-[var(--royal-gold)] hover:text-white active:scale-95 active:shadow-md w-full sm:w-auto"
@@ -259,6 +309,16 @@ export default function Financing() {
                 <span className="relative z-10">Talk to a Specialist</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-[var(--royal-gold)] to-[var(--royal-gold-light)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </a>
+              <button
+                onClick={openFinancingModal}
+                className="group relative overflow-hidden inline-flex items-center justify-center gap-3 bg-transparent border-2 border-white text-white px-10 py-4 rounded-full font-bold text-base lg:text-lg shadow-md hover:shadow-xl transition-all duration-300 ease-out hover:scale-110 hover:bg-white hover:text-[var(--royal-red)] active:scale-95 active:shadow-sm w-full sm:w-auto"
+              >
+                <svg className="w-5 h-5 lg:w-6 lg:h-6 relative z-10 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2.5 2.5 0 002.22 0L21 8m-1 10H4a1 1 0 01-1-1V7a1 1 0 011-1h16a1 1 0 011 1v10a1 1 0 01-1 1z" />
+                </svg>
+                <span className="relative z-10">Request Financing</span>
+                <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </button>
             </div>
 
             <p className={`text-white/60 text-xs lg:text-sm mt-6 lg:mt-8 transition-all duration-700 delay-300 ${ctaVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-8 blur-sm'}`}>
@@ -267,6 +327,108 @@ export default function Financing() {
           </div>
         </div>
       </section>
+
+      {/* Financing Request Modal */}
+      {isFinancingModalOpen && (
+        <div className={`fixed inset-0 z-[1200] flex items-center justify-center p-4 sm:p-6 ${isFinancingModalClosing ? 'animate-modal-fade-out' : 'animate-modal-fade-in'}`}>
+          <div
+            className={`absolute inset-0 ${isFinancingModalClosing ? 'animate-backdrop-unblur' : 'animate-backdrop-blur'}`}
+            onClick={closeFinancingModal}
+          />
+          <div className={`relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-3xl bg-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] border border-white/40 ${isFinancingModalClosing ? 'animate-modal-slide-down' : 'animate-modal-slide-up'}`}>
+            {!isFinancingSubmitted ? (
+              <>
+                <div className="bg-gradient-to-r from-[var(--royal-red)] to-[var(--royal-red-dark)] px-6 py-6 sm:px-8 sm:py-7">
+                  <button
+                    onClick={closeFinancingModal}
+                    className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/20 text-white hover:bg-white/30 transition-all duration-200"
+                    aria-label="Close financing form"
+                  >
+                    ✕
+                  </button>
+                  <p className="text-[var(--royal-gold)] text-xs font-semibold uppercase tracking-[0.16em] mb-2">
+                    Financing Request
+                  </p>
+                  <h2 className="text-white text-2xl sm:text-3xl font-bold leading-tight">Talk to a Financing Specialist</h2>
+                </div>
+
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setIsFinancingSubmitted(true);
+                  }}
+                  className="px-6 py-6 sm:px-8 sm:py-8 space-y-6"
+                >
+                  <div>
+                    <label htmlFor="financing-full-name" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Full Name <span className="text-[var(--royal-red)]">*</span>
+                    </label>
+                    <input
+                      required
+                      id="financing-full-name"
+                      type="text"
+                      value={financingForm.fullName}
+                      onChange={(e) => setFinancingForm((prev) => ({ ...prev, fullName: e.target.value }))}
+                      placeholder="John Doe"
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="financing-phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Phone Number <span className="text-[var(--royal-red)]">*</span>
+                    </label>
+                    <input
+                      required
+                      id="financing-phone"
+                      type="tel"
+                      value={financingForm.phone}
+                      onChange={(e) => setFinancingForm((prev) => ({ ...prev, phone: e.target.value }))}
+                      placeholder="(330) 555-1234"
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="financing-email" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Email Address <span className="text-[var(--royal-red)]">*</span>
+                    </label>
+                    <input
+                      required
+                      id="financing-email"
+                      type="email"
+                      value={financingForm.email}
+                      onChange={(e) => setFinancingForm((prev) => ({ ...prev, email: e.target.value }))}
+                      placeholder="john.doe@example.com"
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="inline-flex items-center justify-center bg-[var(--royal-red)] text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 hover:bg-[var(--royal-red-dark)] hover:scale-[1.02] active:scale-95"
+                  >
+                    Submit Request
+                  </button>
+                </form>
+              </>
+            ) : (
+              <div className="px-8 py-14 text-center animate-[fadeInUp_0.35s_ease-out]">
+                <div className="w-16 h-16 rounded-full bg-[var(--royal-red)]/10 text-[var(--royal-red)] mx-auto flex items-center justify-center mb-5">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-bold text-[var(--royal-dark)] mb-3">Thank You!</h3>
+                <p className="text-gray-600 text-base sm:text-lg mb-2">
+                  We will reach out as soon as possible about your financing options!
+                </p>
+                <p className="text-gray-500 text-sm">Closing in 5 seconds...</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="bg-[#141414] pt-8 lg:pt-14 pb-6 relative z-20">

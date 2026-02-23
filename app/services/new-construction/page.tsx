@@ -139,7 +139,7 @@ export default function NewConstruction() {
             <div className={`transition-all duration-700 lg:order-2 ${sectionsVisible[1] ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-8 blur-sm'}`}>
               <div className="bg-[var(--royal-cream)] rounded-[2rem] aspect-[4/3] flex items-center justify-center overflow-hidden shadow-[0_20px_50px_-10px_rgba(0,0,0,0.4)] relative transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_22px_55px_-10px_rgba(0,0,0,0.45)] cursor-pointer">
                 {/* Experience Badge */}
-                <div className="absolute bottom-4 left-4 lg:bottom-8 lg:left-8 w-20 h-20 lg:w-32 lg:h-32 bg-gradient-to-br from-[var(--royal-red)] to-[var(--royal-red-dark)] rounded-full flex flex-col items-center justify-center shadow-2xl z-10 rotate-[-15deg]">
+                <div className="absolute bottom-4 left-4 lg:bottom-8 lg:left-8 w-20 h-20 lg:w-32 lg:h-32 bg-gradient-to-br from-[var(--royal-red)] to-[var(--royal-red-dark)] rounded-full flex flex-col items-center justify-center shadow-2xl z-10 rotate-[-15deg] cursor-pointer transition-all duration-300 ease-out hover:scale-[1.18] hover:rotate-[-10deg] hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(0,0,0,0.55)]">
                   <div className="text-white text-2xl lg:text-4xl font-bold">15+</div>
                   <div className="text-white text-[10px] lg:text-sm font-semibold">Years of</div>
                   <div className="text-white text-[10px] lg:text-sm font-semibold">Experience</div>
@@ -157,11 +157,10 @@ export default function NewConstruction() {
             {/* Content */}
             <div className={`transition-all duration-700 delay-200 lg:order-1 flex flex-col justify-center ${sectionsVisible[1] ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-8 blur-sm'}`}>
               <h2 className="text-lg lg:text-2xl font-bold text-[var(--royal-dark)] mb-4 whitespace-nowrap text-center lg:text-left">
-                <span className="lg:hidden">Contracting for Commercial Buildings</span>
-                <span className="hidden lg:inline">HVAC Contracting for Commercial Buildings</span>
+                Residential &amp; Commercial HVAC
               </h2>
               <p className="text-gray-600 text-sm lg:text-base leading-relaxed mb-6 lg:mb-8 text-center lg:text-left">
-                As a qualified new construction HVAC specialist, Royal Heating and Cooling provides custom-engineered heating, cooling, and ventilation systems for commercial properties. Our experienced team partners closely with your construction crew to ensure every system is properly sized, efficiently designed, and engineered for long-lasting performance. We tackle common obstacles including optimal airflow distribution, energy conservation, climate zoning, and regulatory compliance, guaranteeing that new commercial buildings achieve dependable temperature control right from launch day.
+                As a qualified new construction HVAC specialist, Royal Heating and Cooling provides custom-engineered heating, cooling, and ventilation systems for residential and commercial properties. Our experienced team partners closely with your construction crew to ensure every system is properly sized, efficiently designed, and engineered for long-lasting performance. We tackle common obstacles including optimal airflow distribution, energy conservation, climate zoning, and regulatory compliance, guaranteeing that new commercial buildings achieve dependable temperature control right from launch day.
               </p>
 
               {/* Stats Row */}
@@ -198,7 +197,7 @@ export default function NewConstruction() {
             </h2>
             <div className="w-16 h-1 bg-[var(--royal-red)] mx-auto mb-6"></div>
             <p className={`text-gray-600 text-sm lg:text-base mt-6 max-w-3xl mx-auto transition-all duration-700 delay-100 ${sectionsVisible[2] ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-8 blur-sm'}`}>
-              Constructing a new commercial facility demands a dependable and effective HVAC system to maintain long-term comfort and efficiency. Our team delivers tailored HVAC solutions engineered to fulfill the distinct requirements of new construction developments.
+              Constructing a new commercial or residential building demands a dependable and effective HVAC system to maintain long-term comfort and efficiency. Our team delivers tailored HVAC solutions engineered to fulfill the distinct requirements of new construction developments.
             </p>
           </div>
 

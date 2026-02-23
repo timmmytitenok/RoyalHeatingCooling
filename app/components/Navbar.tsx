@@ -256,14 +256,14 @@ export default function Navbar() {
               </button>
 
               <Link 
-                href="/about" 
+                href="/about-us" 
                 className={`nav-link font-semibold text-base transition-all duration-300 ease-out hover:tracking-wide
-                  ${isActive('/about') 
+                  ${isActive('/about-us') 
                     ? 'text-[var(--royal-red)] active' 
                     : 'text-gray-700 hover:text-[var(--royal-red)]'
                   }`}
               >
-                About
+                About Us
               </Link>
             </div>
 
@@ -414,26 +414,26 @@ export default function Navbar() {
                 </svg>
               </button>
 
-              {/* About */}
+              {/* About Us */}
               <Link
-                href="/about"
+                href="/about-us"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`group flex items-center justify-between px-4 py-3.5 rounded-xl transition-all duration-200 ${
-                  pathname === '/about' 
+                  pathname === '/about-us' 
                     ? 'bg-[var(--royal-red)]/5 border border-[var(--royal-red)]/15' 
                     : 'hover:bg-gray-50 active:bg-gray-100'
                 } ${isMobileMenuOpen && mobileSubmenu === 'main' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
                 style={{ transitionDelay: isMobileMenuOpen && mobileSubmenu === 'main' ? '260ms' : '0ms' }}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-9 h-9 flex items-center justify-center rounded-lg ${pathname === '/about' ? 'bg-[var(--royal-red)] text-white' : 'bg-gray-100 text-gray-500'}`}>
+                  <div className={`w-9 h-9 flex items-center justify-center rounded-lg ${pathname === '/about-us' ? 'bg-[var(--royal-red)] text-white' : 'bg-gray-100 text-gray-500'}`}>
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <span className={`font-medium text-[15px] ${pathname === '/about' ? 'text-[var(--royal-red)]' : 'text-[var(--royal-dark)]'}`}>About</span>
+                  <span className={`font-medium text-[15px] ${pathname === '/about-us' ? 'text-[var(--royal-red)]' : 'text-[var(--royal-dark)]'}`}>About Us</span>
                 </div>
-                {pathname === '/about' && <div className="w-1.5 h-1.5 rounded-full bg-[var(--royal-red)]"></div>}
+                {pathname === '/about-us' && <div className="w-1.5 h-1.5 rounded-full bg-[var(--royal-red)]"></div>}
               </Link>
             </div>
 

@@ -11,6 +11,15 @@ export default function AboutPage() {
   const [differenceVisible, setDifferenceVisible] = useState(false);
   const [treatmentVisible, setTreatmentVisible] = useState(false);
   const [ctaVisible, setCtaVisible] = useState(false);
+  const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
+  const [isScheduleModalClosing, setIsScheduleModalClosing] = useState(false);
+  const [isScheduleSubmitted, setIsScheduleSubmitted] = useState(false);
+  const [scheduleForm, setScheduleForm] = useState({
+    fullName: '',
+    phone: '',
+    email: '',
+    service: '',
+  });
   const [vanProgress, setVanProgress] = useState(0);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -95,6 +104,49 @@ export default function AboutPage() {
       ctaObserver.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    if (!isScheduleModalOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isScheduleModalOpen]);
+
+  const resetScheduleForm = () => {
+    setScheduleForm({
+      fullName: '',
+      phone: '',
+      email: '',
+      service: '',
+    });
+  };
+
+  const openScheduleModal = () => {
+    resetScheduleForm();
+    setIsScheduleSubmitted(false);
+    setIsScheduleModalClosing(false);
+    setIsScheduleModalOpen(true);
+  };
+
+  const closeScheduleModal = () => {
+    setIsScheduleModalClosing(true);
+    setTimeout(() => {
+      setIsScheduleModalOpen(false);
+      setIsScheduleModalClosing(false);
+      setIsScheduleSubmitted(false);
+      resetScheduleForm();
+    }, 400);
+  };
+
+  useEffect(() => {
+    if (!isScheduleSubmitted) return;
+    const timer = setTimeout(() => {
+      closeScheduleModal();
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [isScheduleSubmitted]);
 
   return (
     <main className="min-h-screen bg-white">
@@ -240,8 +292,8 @@ export default function AboutPage() {
                   listen, explain your options plainly, and never pressure you into a decision.
                 </p>
                 <p>
-                  <span className="lg:hidden">Our goal isn&apos;t just to fix your HVAC system — it&apos;s to earn your trust so you feel confident calling us again and recommending us to the people you care.</span>
-                  <span className="hidden lg:inline">Our goal isn&apos;t just to fix your HVAC system — it&apos;s to earn your trust so you feel confident calling us again and recommending us to the people you care about.</span>
+                  <span className="lg:hidden">Our goal isn&apos;t just to fix your HVAC system — it&apos;s to earn your trust so you feel confident calling us again and recommending us to the people you care about and referring us to those you value most.</span>
+                  <span className="hidden lg:inline">Our goal isn&apos;t just to fix your HVAC system — it&apos;s to earn your trust so you feel confident calling us again and recommending us to the people you care about and referring us to those you value most.</span>
                 </p>
               </div>
             </div>
@@ -484,8 +536,8 @@ export default function AboutPage() {
                 <span className="relative z-10">Call (330) 662-1123</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-[var(--royal-gold)] to-[var(--royal-gold-light)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </a>
-              <Link 
-                href="/contact" 
+              <button
+                onClick={openScheduleModal}
                 className="group relative overflow-hidden inline-flex items-center justify-center gap-3 bg-transparent border-2 border-white text-white px-10 py-4 rounded-full font-bold text-base lg:text-lg shadow-md hover:shadow-xl transition-all duration-300 ease-out hover:scale-110 hover:bg-white hover:text-[var(--royal-red)] active:scale-95 active:shadow-sm w-full sm:w-auto"
               >
                 <svg className="w-5 h-5 lg:w-6 lg:h-6 relative z-10 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -493,7 +545,7 @@ export default function AboutPage() {
                 </svg>
                 <span className="relative z-10">Schedule Service</span>
                 <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </Link>
+              </button>
             </div>
 
             <p className={`text-white/60 text-xs lg:text-sm mt-6 lg:mt-8 transition-all duration-700 ${ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: ctaVisible ? '300ms' : '0ms' }}>
@@ -571,7 +623,14 @@ export default function AboutPage() {
               <div>
                 <h4 className="text-gray-300 text-xs font-semibold uppercase tracking-wider mb-4">Contact</h4>
                 <ul className="space-y-2">
-                  <li><Link href="/contact" className="text-gray-500 text-xs hover:text-gray-300 transition-colors">Schedule Service</Link></li>
+                  <li>
+                    <button
+                      onClick={openScheduleModal}
+                      className="text-gray-500 text-xs hover:text-gray-300 transition-colors"
+                    >
+                      Schedule Service
+                    </button>
+                  </li>
                   <li><a href="tel:3306621123" className="text-gray-500 text-xs hover:text-gray-300 transition-colors">(330) 662-1123</a></li>
                 </ul>
                 <p className="text-gray-600 text-xs mt-4">
@@ -590,8 +649,132 @@ export default function AboutPage() {
         </div>
       </footer>
 
+      {/* About Schedule Modal */}
+      {isScheduleModalOpen && (
+        <div className={`fixed inset-0 z-[1200] flex items-center justify-center p-4 sm:p-6 ${isScheduleModalClosing ? 'animate-modal-fade-out' : 'animate-modal-fade-in'}`}>
+          <div
+            className={`absolute inset-0 ${isScheduleModalClosing ? 'animate-backdrop-unblur' : 'animate-backdrop-blur'}`}
+            onClick={closeScheduleModal}
+          />
+          <div className={`relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-3xl bg-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] border border-white/40 ${isScheduleModalClosing ? 'animate-modal-slide-down' : 'animate-modal-slide-up'}`}>
+            {!isScheduleSubmitted ? (
+              <>
+                <div className="bg-gradient-to-r from-[var(--royal-red)] to-[var(--royal-red-dark)] px-6 py-6 sm:px-8 sm:py-7">
+                  <button
+                    onClick={closeScheduleModal}
+                    className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/20 text-white hover:bg-white/30 transition-all duration-200"
+                    aria-label="Close schedule form"
+                  >
+                    ✕
+                  </button>
+                  <p className="text-[var(--royal-gold)] text-xs font-semibold uppercase tracking-[0.16em] mb-2">
+                    Schedule Service
+                  </p>
+                  <h2 className="text-white text-2xl sm:text-3xl font-bold leading-tight">Book Your Service Request</h2>
+                </div>
+
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setIsScheduleSubmitted(true);
+                  }}
+                  className="px-6 py-6 sm:px-8 sm:py-8 space-y-6"
+                >
+                  <div>
+                    <label htmlFor="about-schedule-full-name" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Full Name <span className="text-[var(--royal-red)]">*</span>
+                    </label>
+                    <input
+                      required
+                      id="about-schedule-full-name"
+                      type="text"
+                      value={scheduleForm.fullName}
+                      onChange={(e) => setScheduleForm((prev) => ({ ...prev, fullName: e.target.value }))}
+                      placeholder="John Doe"
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="about-schedule-phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Phone Number <span className="text-[var(--royal-red)]">*</span>
+                    </label>
+                    <input
+                      required
+                      id="about-schedule-phone"
+                      type="tel"
+                      value={scheduleForm.phone}
+                      onChange={(e) => setScheduleForm((prev) => ({ ...prev, phone: e.target.value }))}
+                      placeholder="(330) 555-1234"
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="about-schedule-email" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Email Address <span className="text-[var(--royal-red)]">*</span>
+                    </label>
+                    <input
+                      required
+                      id="about-schedule-email"
+                      type="email"
+                      value={scheduleForm.email}
+                      onChange={(e) => setScheduleForm((prev) => ({ ...prev, email: e.target.value }))}
+                      placeholder="john.doe@example.com"
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="about-schedule-service" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Service Needed <span className="text-[var(--royal-red)]">*</span>
+                    </label>
+                    <select
+                      required
+                      id="about-schedule-service"
+                      value={scheduleForm.service}
+                      onChange={(e) => setScheduleForm((prev) => ({ ...prev, service: e.target.value }))}
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
+                    >
+                      <option value="" disabled>Select a service</option>
+                      <option value="Air Conditioning">Air Conditioning</option>
+                      <option value="Furnace">Furnace</option>
+                      <option value="Heat Pump">Heat Pump</option>
+                      <option value="Mini-Split Systems">Mini-Split Systems</option>
+                      <option value="Water Heaters">Water Heaters</option>
+                      <option value="Duct Cleaning">Duct Cleaning</option>
+                      <option value="Indoor Air Quality">Indoor Air Quality</option>
+                    </select>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="inline-flex items-center justify-center bg-[var(--royal-red)] text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 hover:bg-[var(--royal-red-dark)] hover:scale-[1.02] active:scale-95"
+                  >
+                    Submit Request
+                  </button>
+                </form>
+              </>
+            ) : (
+              <div className="px-8 py-14 text-center animate-[fadeInUp_0.35s_ease-out]">
+                <div className="w-16 h-16 rounded-full bg-[var(--royal-red)]/10 text-[var(--royal-red)] mx-auto flex items-center justify-center mb-5">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-bold text-[var(--royal-dark)] mb-3">Thank You!</h3>
+                <p className="text-gray-600 text-base sm:text-lg mb-2">
+                  We will reach out as soon as possible to confirm your service request.
+                </p>
+                <p className="text-gray-500 text-sm">Closing in 5 seconds...</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Floating Text Us Button */}
-      <div className="hidden lg:block fixed bottom-6 right-6 z-40 opacity-0 animate-[popFade_0.4s_ease-out_2s_forwards]">
+      <div className="hidden fixed bottom-6 right-6 z-40 opacity-0 animate-[popFade_0.4s_ease-out_2s_forwards]">
         {/* Contact Form Popup */}
         <div className={`absolute bottom-16 right-0 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-500 ease-out origin-bottom-right ${isContactOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-2 pointer-events-none'}`}>
           {/* Header */}

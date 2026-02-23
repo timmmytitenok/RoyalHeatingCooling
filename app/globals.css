@@ -2,8 +2,8 @@
 
 :root {
   /* Royal Heating and Cooling Color Palette */
-  --royal-red: #8B1538;
-  --royal-red-dark: #6B1028;
+  --royal-red: #7A001F;
+  --royal-red-dark: #520015;
   --royal-red-light: #A91D45;
   --royal-gold: #D4A84B;
   --royal-gold-light: #E5C77A;
@@ -495,8 +495,8 @@ body {
 
 /* Text Us Button Styles */
 .text-us-btn {
-  background: #8B1538 !important;
-  background-color: #8B1538 !important;
+  background: var(--royal-red) !important;
+  background-color: var(--royal-red) !important;
   transition: all 0.3s ease-out;
   position: relative;
   overflow: hidden;
@@ -504,8 +504,8 @@ body {
 }
 
 .text-us-btn:hover {
-  background: #8B1538 !important;
-  background-color: #8B1538 !important;
+  background: var(--royal-red-dark) !important;
+  background-color: var(--royal-red-dark) !important;
   box-shadow: 0 12px 28px rgba(0,0,0,0.4) !important;
 }
 

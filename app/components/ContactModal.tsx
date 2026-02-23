@@ -9,17 +9,16 @@ interface ContactModalProps {
 
 export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    fullName: '',
     phone: '',
     email: '',
     description: ''
   });
 
   const [errors, setErrors] = useState({
-    firstName: '',
-    lastName: '',
+    fullName: '',
     phone: '',
+    email: '',
     description: ''
   });
 
@@ -60,16 +59,15 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     if (!isOpen) {
       setTimeout(() => {
         setFormData({
-          firstName: '',
-          lastName: '',
+          fullName: '',
           phone: '',
           email: '',
           description: ''
         });
         setErrors({
-          firstName: '',
-          lastName: '',
+          fullName: '',
           phone: '',
+          email: '',
           description: ''
         });
         setSubmitSuccess(false);
@@ -100,29 +98,34 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
   const validateForm = () => {
     const newErrors = {
-      firstName: '',
-      lastName: '',
+      fullName: '',
       phone: '',
+      email: '',
       description: ''
     };
 
     let isValid = true;
 
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = 'First name is required';
-      isValid = false;
-    }
-
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = 'Last name is required';
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = 'Full name is required';
       isValid = false;
     }
 
     if (!formData.phone.trim()) {
       newErrors.phone = 'Phone number is required';
       isValid = false;
-    } else if (!/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(formData.phone.trim())) {
+    }
+
+    if (!/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(formData.phone.trim())) {
       newErrors.phone = 'Please enter a valid phone number';
+      isValid = false;
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+      isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      newErrors.email = 'Please enter a valid email';
       isValid = false;
     }
 
@@ -164,196 +167,139 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
         isClosing ? 'animate-modal-fade-out' : 'animate-modal-fade-in'
       }`}
     >
-      {/* Backdrop with blur */}
+      {/* Backdrop */}
       <div 
-        className={`absolute inset-0 ${
-          isClosing ? 'animate-backdrop-unblur' : 'animate-backdrop-blur'
-        }`}
+        className="absolute inset-0 bg-black/80 backdrop-blur-md"
         onClick={handleClose}
       />
 
       {/* Modal Content */}
       <div 
-        className={`relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl ${
+        className={`relative w-full max-w-2xl max-h-[92vh] overflow-y-auto bg-white rounded-3xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] border border-white/40 ${
           isClosing ? 'animate-modal-slide-down' : 'animate-modal-slide-up'
         }`}
       >
-        {/* Close Button */}
-        <button
-          onClick={handleClose}
-          className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-200 hover:scale-110 group"
-          aria-label="Close modal"
-        >
-          <svg 
-            className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 group-hover:text-gray-800" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
+        <div className="bg-gradient-to-r from-[var(--royal-red)] to-[var(--royal-red-dark)] px-6 py-6 sm:px-8 sm:py-7">
+          <button
+            onClick={handleClose}
+            className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/20 text-white hover:bg-white/30 transition-all duration-200"
+            aria-label="Close modal"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+            ✕
+          </button>
+          <p className="text-[var(--royal-gold)] text-xs font-semibold uppercase tracking-[0.16em] mb-2">
+            Contact Request
+          </p>
+          <h2 className="text-white text-2xl sm:text-3xl font-bold leading-tight">
+            Get In Touch
+          </h2>
+        </div>
 
-        <div className="p-4 sm:p-8">
-          {/* Header */}
-          <div className="text-center mb-4 sm:mb-6">
-            <h2 className="text-xl sm:text-3xl font-bold text-[var(--royal-dark)] mb-1 sm:mb-2">
-              Get In Touch
-            </h2>
-            <p className="text-gray-600 text-xs sm:text-base">
-              Fill out the form below and we&apos;ll get back to you shortly
-            </p>
-          </div>
+        <div className="px-6 py-6 sm:px-8 sm:py-8">
 
           {/* Success Message */}
           {submitSuccess && (
-            <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg animate-fade-in">
-              <p className="text-green-800 text-center font-medium text-sm">
-                ✓ Thank you! Your message has been sent successfully.
+            <div className="text-center px-2 py-10 animate-[fadeInUp_0.35s_ease-out]">
+              <div className="w-16 h-16 rounded-full bg-[var(--royal-red)]/10 text-[var(--royal-red)] mx-auto flex items-center justify-center mb-5">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-bold text-[var(--royal-dark)] mb-3">Thank You!</h3>
+              <p className="text-gray-600 text-base sm:text-lg mb-2">
+                We will reach out as soon as possible.
               </p>
             </div>
           )}
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
-            {/* First Name & Last Name Row */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              {/* First Name */}
+          {!submitSuccess && (
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="firstName" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">
-                  First Name <span className="text-[var(--royal-red)]">*</span>
+                <label htmlFor="fullName" className="block text-sm font-semibold text-gray-700 mb-2">
+                  Full Name <span className="text-[var(--royal-red)]">*</span>
                 </label>
                 <input
+                  required
                   type="text"
-                  id="firstName"
-                  name="firstName"
-                  value={formData.firstName}
+                  id="fullName"
+                  name="fullName"
+                  value={formData.fullName}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 sm:py-2.5 border ${
-                    errors.firstName ? 'border-red-500' : 'border-gray-300'
-                  } rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)] focus:border-transparent transition-all text-sm`}
-                  placeholder="John"
+                  className={`w-full rounded-xl border px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)] ${
+                    errors.fullName ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="John Doe"
                 />
-                {errors.firstName && (
-                  <p className="mt-1 text-xs text-red-500">{errors.firstName}</p>
-                )}
+                {errors.fullName && <p className="mt-1 text-xs text-red-500">{errors.fullName}</p>}
               </div>
 
-              {/* Last Name */}
               <div>
-                <label htmlFor="lastName" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">
-                  Last Name <span className="text-[var(--royal-red)]">*</span>
+                <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                  Phone Number <span className="text-[var(--royal-red)]">*</span>
                 </label>
                 <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  value={formData.lastName}
+                  required
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 sm:py-2.5 border ${
-                    errors.lastName ? 'border-red-500' : 'border-gray-300'
-                  } rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)] focus:border-transparent transition-all text-sm`}
-                  placeholder="Doe"
+                  className={`w-full rounded-xl border px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)] ${
+                    errors.phone ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="(330) 555-1234"
                 />
-                {errors.lastName && (
-                  <p className="mt-1 text-xs text-red-500">{errors.lastName}</p>
-                )}
+                {errors.phone && <p className="mt-1 text-xs text-red-500">{errors.phone}</p>}
               </div>
-            </div>
 
-            {/* Phone Number */}
-            <div>
-              <label htmlFor="phone" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">
-                Phone Number <span className="text-[var(--royal-red)]">*</span>
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className={`w-full px-3 py-2 sm:py-2.5 border ${
-                  errors.phone ? 'border-red-500' : 'border-gray-300'
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)] focus:border-transparent transition-all text-sm`}
-                placeholder="(330) 555-1234"
-              />
-              {errors.phone && (
-                <p className="mt-1 text-xs text-red-500">{errors.phone}</p>
-              )}
-            </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                  Email Address <span className="text-[var(--royal-red)]">*</span>
+                </label>
+                <input
+                  required
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className={`w-full rounded-xl border px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)] ${
+                    errors.email ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="john.doe@example.com"
+                />
+                {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
+              </div>
 
-            {/* Email (Optional) */}
-            <div>
-              <label htmlFor="email" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">
-                Email <span className="text-gray-400 text-xs">(Optional)</span>
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-3 py-2 sm:py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)] focus:border-transparent transition-all text-sm"
-                placeholder="john.doe@example.com"
-              />
-            </div>
+              <div>
+                <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-2">
+                  Description <span className="text-[var(--royal-red)]">*</span>
+                </label>
+                <textarea
+                  required
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  rows={4}
+                  className={`w-full rounded-xl border px-4 py-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)] ${
+                    errors.description ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Briefly describe how we can help..."
+                />
+                {errors.description && <p className="mt-1 text-xs text-red-500">{errors.description}</p>}
+              </div>
 
-            {/* Description */}
-            <div>
-              <label htmlFor="description" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">
-                Description <span className="text-[var(--royal-red)]">*</span>
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                rows={2}
-                className={`w-full px-3 py-2 sm:py-2.5 border ${
-                  errors.description ? 'border-red-500' : 'border-gray-300'
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)] focus:border-transparent transition-all resize-none text-sm`}
-                placeholder="Tell us about your HVAC needs..."
-              />
-              {errors.description && (
-                <p className="mt-1 text-xs text-red-500">{errors.description}</p>
-              )}
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-[var(--royal-red)] text-white font-bold text-sm sm:text-base py-3 sm:py-3.5 rounded-lg 
-                transition-all duration-300 ease-out hover:bg-[var(--royal-red-dark)] hover:shadow-xl 
-                hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed
-                disabled:hover:scale-100"
-            >
-              {isSubmitting ? (
-                <span className="flex items-center justify-center gap-2">
-                  <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Submitting...
-                </span>
-              ) : (
-                'Submit'
-              )}
-            </button>
-
-            {/* Additional Info */}
-            <div className="text-center pt-2">
-              <p className="text-xs text-gray-500">
-                Or call us directly at{' '}
-                <a 
-                  href="tel:3306621123" 
-                  className="text-[var(--royal-red)] font-semibold hover:underline"
-                >
-                  (330) 662-1123
-                </a>
-              </p>
-            </div>
-          </form>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="inline-flex items-center justify-center bg-[var(--royal-red)] text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 hover:bg-[var(--royal-red-dark)] hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit Request'}
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </div>

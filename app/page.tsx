@@ -107,6 +107,15 @@ export default function Home() {
   const [reviewsVisible, setReviewsVisible] = useState(false);
   const [brandsVisible, setBrandsVisible] = useState(false);
   const [ctaVisible, setCtaVisible] = useState(false);
+  const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
+  const [isScheduleModalClosing, setIsScheduleModalClosing] = useState(false);
+  const [isScheduleSubmitted, setIsScheduleSubmitted] = useState(false);
+  const [scheduleForm, setScheduleForm] = useState({
+    fullName: '',
+    phone: '',
+    email: '',
+    service: '',
+  });
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [contactForm, setContactForm] = useState({ name: '', phone: '', message: '' });
   
@@ -148,6 +157,49 @@ export default function Home() {
       ctaObserver.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    if (!isScheduleModalOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isScheduleModalOpen]);
+
+  const resetScheduleForm = () => {
+    setScheduleForm({
+      fullName: '',
+      phone: '',
+      email: '',
+      service: '',
+    });
+  };
+
+  const openScheduleModal = () => {
+    resetScheduleForm();
+    setIsScheduleSubmitted(false);
+    setIsScheduleModalClosing(false);
+    setIsScheduleModalOpen(true);
+  };
+
+  const closeScheduleModal = () => {
+    setIsScheduleModalClosing(true);
+    setTimeout(() => {
+      setIsScheduleModalOpen(false);
+      setIsScheduleModalClosing(false);
+      setIsScheduleSubmitted(false);
+      resetScheduleForm();
+    }, 400);
+  };
+
+  useEffect(() => {
+    if (!isScheduleSubmitted) return;
+    const timer = setTimeout(() => {
+      closeScheduleModal();
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [isScheduleSubmitted]);
 
   return (
     <main className="min-h-screen">
@@ -208,14 +260,14 @@ export default function Home() {
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 lg:gap-4 items-stretch sm:items-center justify-center lg:justify-start animate-fade-up-6">
-                <Link 
-                  href="/contact" 
+                <button 
+                  onClick={openScheduleModal}
                   className="group relative overflow-hidden bg-[var(--royal-red)] text-white px-8 lg:px-10 py-3 lg:py-3.5 text-sm lg:text-base rounded-full font-semibold text-center justify-center inline-flex items-center gap-2 shadow-lg hover:shadow-2xl transition-all duration-300 ease-out hover:scale-110 hover:shadow-[var(--royal-red)]/50 active:scale-95 active:shadow-md"
                 >
                   <span className="relative z-10">Schedule Service</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-[var(--royal-red-dark)] to-[var(--royal-red)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="absolute inset-0 -translate-x-full group-hover:translate-x-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700"></div>
-                </Link>
+                </button>
                 <a 
                   href="tel:3306621123" 
                   className="group relative overflow-hidden border-2 border-[var(--royal-red)] text-[var(--royal-red)] bg-white px-6 lg:px-8 py-3 lg:py-3.5 text-sm lg:text-base rounded-full font-semibold inline-flex items-center gap-2 justify-center shadow-md hover:shadow-xl transition-all duration-300 ease-out hover:scale-110 hover:bg-[var(--royal-gold)] hover:text-white hover:border-[var(--royal-gold)] active:scale-95 active:shadow-sm"
@@ -249,7 +301,7 @@ export default function Home() {
                   Whether it&apos;s an emergency repair or a planned upgrade, we&apos;ll walk you through your options — no pressure, no surprises.
                 </p>
                 {/* Desktop Button */}
-                <Link href="/about" className="hidden lg:inline-flex group relative overflow-hidden bg-[var(--royal-red)] text-white px-6 lg:px-8 py-2.5 lg:py-3 text-sm lg:text-base rounded-full font-semibold w-fit items-center gap-2 shadow-lg hover:shadow-2xl transition-all duration-300 ease-out hover:scale-110 hover:shadow-[var(--royal-red)]/50 active:scale-95 active:shadow-md">
+                <Link href="/about-us" className="hidden lg:inline-flex group relative overflow-hidden bg-[var(--royal-red)] text-white px-6 lg:px-8 py-2.5 lg:py-3 text-sm lg:text-base rounded-full font-semibold w-fit items-center gap-2 shadow-lg hover:shadow-2xl transition-all duration-300 ease-out hover:scale-110 hover:shadow-[var(--royal-red)]/50 active:scale-95 active:shadow-md">
                   <span className="relative z-10">See How We Can Help</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-[var(--royal-red-dark)] to-[var(--royal-red)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="absolute inset-0 -translate-x-full group-hover:translate-x-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700"></div>
@@ -284,7 +336,7 @@ export default function Home() {
             
             {/* Bottom Button - Mobile Only */}
             <div className="flex justify-center mt-12 lg:hidden">
-              <Link href="/about" className="group relative overflow-hidden bg-[var(--royal-red)] text-white px-10 py-4 text-base rounded-full font-bold w-fit inline-flex items-center gap-2 shadow-xl hover:shadow-2xl transition-all duration-300 ease-out hover:scale-110 hover:shadow-[var(--royal-red)]/50 active:scale-95 active:shadow-md">
+              <Link href="/about-us" className="group relative overflow-hidden bg-[var(--royal-red)] text-white px-10 py-4 text-base rounded-full font-bold w-fit inline-flex items-center gap-2 shadow-xl hover:shadow-2xl transition-all duration-300 ease-out hover:scale-110 hover:shadow-[var(--royal-red)]/50 active:scale-95 active:shadow-md">
                 <span className="relative z-10">See How We Can Help</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-[var(--royal-red-dark)] to-[var(--royal-red)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="absolute inset-0 -translate-x-full group-hover:translate-x-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700"></div>
@@ -515,8 +567,8 @@ export default function Home() {
                 <span className="relative z-10">Call (330) 662-1123</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-[var(--royal-gold)] to-[var(--royal-gold-light)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </a>
-              <Link 
-                href="/contact" 
+              <button 
+                onClick={openScheduleModal}
                 className="group relative overflow-hidden inline-flex items-center justify-center gap-3 bg-transparent border-2 border-white text-white px-10 lg:px-10 py-4 lg:py-4 rounded-full font-bold text-base lg:text-lg shadow-md hover:shadow-xl transition-all duration-300 ease-out hover:scale-110 hover:bg-white hover:text-[var(--royal-red)] active:scale-95 active:shadow-sm w-full sm:w-auto"
               >
                 <svg className="w-5 h-5 lg:w-6 lg:h-6 relative z-10 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -524,7 +576,7 @@ export default function Home() {
                 </svg>
                 <span className="relative z-10">Schedule Service</span>
                 <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </Link>
+              </button>
             </div>
 
             <p className={`text-white/60 text-xs lg:text-sm mt-6 lg:mt-8 transition-all duration-700 ${ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: ctaVisible ? '300ms' : '0ms' }}>
@@ -602,7 +654,14 @@ export default function Home() {
               <div>
                 <h4 className="text-gray-300 text-xs font-semibold uppercase tracking-wider mb-4">Contact</h4>
                 <ul className="space-y-2">
-                  <li><Link href="/contact" className="text-gray-500 text-xs hover:text-gray-300 transition-colors">Schedule Service</Link></li>
+                  <li>
+                    <button
+                      onClick={openScheduleModal}
+                      className="text-gray-500 text-xs hover:text-gray-300 transition-colors"
+                    >
+                      Schedule Service
+                    </button>
+                  </li>
                   <li><a href="tel:3306621123" className="text-gray-500 text-xs hover:text-gray-300 transition-colors">(330) 662-1123</a></li>
                 </ul>
                 <p className="text-gray-600 text-xs mt-4">
@@ -621,8 +680,132 @@ export default function Home() {
         </div>
       </footer>
 
+      {/* Homepage Schedule Modal */}
+      {isScheduleModalOpen && (
+        <div className={`fixed inset-0 z-[1200] flex items-center justify-center p-4 sm:p-6 ${isScheduleModalClosing ? 'animate-modal-fade-out' : 'animate-modal-fade-in'}`}>
+          <div
+            className={`absolute inset-0 ${isScheduleModalClosing ? 'animate-backdrop-unblur' : 'animate-backdrop-blur'}`}
+            onClick={closeScheduleModal}
+          />
+          <div className={`relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-3xl bg-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] border border-white/40 ${isScheduleModalClosing ? 'animate-modal-slide-down' : 'animate-modal-slide-up'}`}>
+            {!isScheduleSubmitted ? (
+              <>
+                <div className="bg-gradient-to-r from-[var(--royal-red)] to-[var(--royal-red-dark)] px-6 py-6 sm:px-8 sm:py-7">
+                  <button
+                    onClick={closeScheduleModal}
+                    className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/20 text-white hover:bg-white/30 transition-all duration-200"
+                    aria-label="Close schedule form"
+                  >
+                    ✕
+                  </button>
+                  <p className="text-[var(--royal-gold)] text-xs font-semibold uppercase tracking-[0.16em] mb-2">
+                    Schedule Service
+                  </p>
+                  <h2 className="text-white text-2xl sm:text-3xl font-bold leading-tight">Book Your Service Request</h2>
+                </div>
+
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setIsScheduleSubmitted(true);
+                  }}
+                  className="px-6 py-6 sm:px-8 sm:py-8 space-y-6"
+                >
+                  <div>
+                    <label htmlFor="home-schedule-full-name" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Full Name <span className="text-[var(--royal-red)]">*</span>
+                    </label>
+                    <input
+                      required
+                      id="home-schedule-full-name"
+                      type="text"
+                      value={scheduleForm.fullName}
+                      onChange={(e) => setScheduleForm((prev) => ({ ...prev, fullName: e.target.value }))}
+                      placeholder="John Doe"
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="home-schedule-phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Phone Number <span className="text-[var(--royal-red)]">*</span>
+                    </label>
+                    <input
+                      required
+                      id="home-schedule-phone"
+                      type="tel"
+                      value={scheduleForm.phone}
+                      onChange={(e) => setScheduleForm((prev) => ({ ...prev, phone: e.target.value }))}
+                      placeholder="(330) 555-1234"
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="home-schedule-email" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Email Address <span className="text-[var(--royal-red)]">*</span>
+                    </label>
+                    <input
+                      required
+                      id="home-schedule-email"
+                      type="email"
+                      value={scheduleForm.email}
+                      onChange={(e) => setScheduleForm((prev) => ({ ...prev, email: e.target.value }))}
+                      placeholder="john.doe@example.com"
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="home-schedule-service" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Service Needed <span className="text-[var(--royal-red)]">*</span>
+                    </label>
+                    <select
+                      required
+                      id="home-schedule-service"
+                      value={scheduleForm.service}
+                      onChange={(e) => setScheduleForm((prev) => ({ ...prev, service: e.target.value }))}
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
+                    >
+                      <option value="" disabled>Select a service</option>
+                      <option value="Air Conditioning">Air Conditioning</option>
+                      <option value="Furnace">Furnace</option>
+                      <option value="Heat Pump">Heat Pump</option>
+                      <option value="Mini-Split Systems">Mini-Split Systems</option>
+                      <option value="Water Heaters">Water Heaters</option>
+                      <option value="Duct Cleaning">Duct Cleaning</option>
+                      <option value="Indoor Air Quality">Indoor Air Quality</option>
+                    </select>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="inline-flex items-center justify-center bg-[var(--royal-red)] text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 hover:bg-[var(--royal-red-dark)] hover:scale-[1.02] active:scale-95"
+                  >
+                    Submit Request
+                  </button>
+                </form>
+              </>
+            ) : (
+              <div className="px-8 py-14 text-center animate-[fadeInUp_0.35s_ease-out]">
+                <div className="w-16 h-16 rounded-full bg-[var(--royal-red)]/10 text-[var(--royal-red)] mx-auto flex items-center justify-center mb-5">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-bold text-[var(--royal-dark)] mb-3">Thank You!</h3>
+                <p className="text-gray-600 text-base sm:text-lg mb-2">
+                  We will reach out as soon as possible to confirm your service request.
+                </p>
+                <p className="text-gray-500 text-sm">Closing in 5 seconds...</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Floating Text Us Button */}
-      <div className="fixed bottom-4 right-4 lg:bottom-6 lg:right-6 z-40 opacity-0 animate-[popFade_0.4s_ease-out_2s_forwards] hidden lg:block">
+      <div className="hidden fixed bottom-4 right-4 lg:bottom-6 lg:right-6 z-40 opacity-0 animate-[popFade_0.4s_ease-out_2s_forwards]">
         {/* Contact Form Popup */}
         <div className={`absolute bottom-14 lg:bottom-16 right-0 w-[calc(100vw-2rem)] max-w-80 bg-white rounded-xl lg:rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-500 ease-out origin-bottom-right ${isContactOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-2 pointer-events-none'}`}>
           {/* Header */}

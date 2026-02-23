@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '../../components/Navbar';
 
+type UrgencyOption = 'emergency' | 'within-48' | 'flexible' | '';
+
 // Service data for each service type
 const servicesData: Record<string, {
   name: string;
@@ -27,7 +29,7 @@ const servicesData: Record<string, {
     tagline: 'Dependable heat for every Ohio winter.',
     heroDescription: "Your furnace is the heart of your home's comfort. We provide expert maintenance, fast repairs, and professional installations — all with clear pricing and no pressure.",
     heroImageLeft: false,
-    heroImage: '/furnace-hero-main.jpg',
+    heroImage: '/furnace-hero-new2.png',
     sections: [
       {
         eyebrow: 'Preventive Heating Maintenance',
@@ -42,7 +44,7 @@ const servicesData: Record<string, {
           'Gas pressure and ignition verification',
           'Complete system performance report',
         ],
-        image: '/furnace-section2-new.jpg',
+        image: '/furnace-running-strong-new.png',
       },
       {
         eyebrow: 'Furnace Installation & Replacement',
@@ -56,7 +58,7 @@ const servicesData: Record<string, {
           'Full system testing and calibration',
           'Walkthrough of your new system and warranty',
         ],
-        image: '/furnace-section3.jpg',
+        image: '/furnace-upgrade-efficient-new.png',
       },
       {
         eyebrow: 'Furnace Repair & Diagnostics',
@@ -79,7 +81,7 @@ const servicesData: Record<string, {
     tagline: 'Stay cool when it matters most.',
     heroDescription: "From routine maintenance to emergency repairs and full system replacements, we keep your AC running at peak performance — no surprises, no runaround.",
     heroImageLeft: true,
-    heroImage: '/ac-hero-new.jpg',
+    heroImage: '/ac-hero-repair-new.png',
     sections: [
       {
         eyebrow: 'Preventive AC Maintenance',
@@ -173,7 +175,7 @@ const servicesData: Record<string, {
     tagline: 'Efficient comfort without the ductwork.',
     heroDescription: 'Ductless mini-splits are ideal for home additions, converted spaces, or rooms that are always too hot or cold. We design and install systems tailored to your needs.',
     heroImageLeft: true,
-    heroImage: '/mini-split-hero.jpg',
+    heroImage: '/mini-split-hero-new.png',
     sections: [
       {
         eyebrow: 'Ductless Flexibility',
@@ -198,7 +200,7 @@ const servicesData: Record<string, {
           'Older homes without existing ductwork',
           'Home offices and studios',
         ],
-        image: '/mini-split-rooms.jpg',
+        image: '/mini-split-work-best-new.png',
       },
       {
         eyebrow: 'Professional Installation',
@@ -210,7 +212,7 @@ const servicesData: Record<string, {
           'Clean, professional mounting and wiring',
           'Full system testing and walkthrough',
         ],
-        image: '/mini-split-install.jpg',
+        image: '/heat-pump-consultation-new.jpg',
       },
     ],
     trustPoints: ['Expert installation', 'Proper sizing guaranteed', 'Clean workmanship', 'Efficient systems'],
@@ -280,7 +282,7 @@ const servicesData: Record<string, {
           'Video inspection cameras',
           'Sanitizing and deodorizing treatments',
         ],
-        image: '/duct-cleaning-technician-new.jpg',
+        image: '/duct-tools-difference.png',
       },
       {
         eyebrow: 'Our Cleaning Process',
@@ -365,7 +367,7 @@ const servicesData: Record<string, {
           'Reduces odors from cooking, pets, and chemicals',
           'Ideal for allergy and asthma sufferers',
         ],
-        image: '/iaq-duct-brush.jpg',
+        image: '/iaq-uv-treatment.png',
       },
       {
         eyebrow: 'Understanding Indoor Pollutants',
@@ -391,6 +393,18 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
   const [heroVisible, setHeroVisible] = useState(false);
   const [sectionsVisible, setSectionsVisible] = useState<boolean[]>([]);
   const [ctaVisible, setCtaVisible] = useState(false);
+  const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
+  const [isScheduleModalClosing, setIsScheduleModalClosing] = useState(false);
+  const [isScheduleSubmitted, setIsScheduleSubmitted] = useState(false);
+  const [propertyTypes, setPropertyTypes] = useState<string[]>([]);
+  const [urgency, setUrgency] = useState<UrgencyOption>('');
+  const [scheduleForm, setScheduleForm] = useState({
+    fullName: '',
+    phone: '',
+    email: '',
+    serviceAddress: '',
+    issueDescription: '',
+  });
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
   const ctaRef = useRef<HTMLElement>(null);
 
@@ -434,6 +448,58 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
       observers.forEach((observer) => observer.disconnect());
     };
   }, [service]);
+
+  useEffect(() => {
+    if (!isScheduleModalOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isScheduleModalOpen]);
+
+  useEffect(() => {
+    if (!isScheduleSubmitted) return;
+    const timer = setTimeout(() => {
+      closeScheduleModal(true);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [isScheduleSubmitted]);
+
+  const togglePropertyType = (value: string) => {
+    setPropertyTypes((prev) =>
+      prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]
+    );
+  };
+
+  const handleScheduleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsScheduleSubmitted(true);
+  };
+
+  const resetScheduleForm = () => {
+    setScheduleForm({
+      fullName: '',
+      phone: '',
+      email: '',
+      serviceAddress: '',
+      issueDescription: '',
+    });
+    setPropertyTypes([]);
+    setUrgency('');
+  };
+
+  const closeScheduleModal = (resetAfterClose = true) => {
+    setIsScheduleModalClosing(true);
+    setTimeout(() => {
+      setIsScheduleModalOpen(false);
+      setIsScheduleModalClosing(false);
+      if (resetAfterClose) {
+        setIsScheduleSubmitted(false);
+        resetScheduleForm();
+      }
+    }, 400);
+  };
 
   // CTA section animation
   useEffect(() => {
@@ -502,8 +568,13 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                   <span className="relative z-10"><span className="lg:hidden">Call Us Now</span><span className="hidden lg:inline">Call Now</span></span>
                   <div className="absolute inset-0 bg-gradient-to-r from-[var(--royal-gold)] to-[var(--royal-gold-light)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </a>
-                <Link 
-                  href="/contact" 
+                <button
+                  onClick={() => {
+                    resetScheduleForm();
+                    setIsScheduleModalClosing(false);
+                    setIsScheduleModalOpen(true);
+                    setIsScheduleSubmitted(false);
+                  }}
                   className="group relative overflow-hidden inline-flex items-center justify-center gap-3 border-2 border-white text-white px-10 py-4 rounded-full font-bold text-base lg:text-lg shadow-md transition-all duration-300 ease-out hover:scale-110 hover:shadow-xl hover:bg-white hover:text-[var(--royal-red)] active:scale-95 active:shadow-sm w-full sm:w-auto"
                 >
                   <svg className="w-5 h-5 lg:w-6 lg:h-6 relative z-10 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -511,7 +582,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                   </svg>
                   <span className="relative z-10">Schedule Service</span>
                   <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </Link>
+                </button>
               </div>
             </div>
             
@@ -654,8 +725,13 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                 <span className="relative z-10">Call (330) 662-1123</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-[var(--royal-gold)] to-[var(--royal-gold-light)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </a>
-              <Link 
-                href="/contact" 
+              <button
+                onClick={() => {
+                  resetScheduleForm();
+                  setIsScheduleModalClosing(false);
+                  setIsScheduleModalOpen(true);
+                  setIsScheduleSubmitted(false);
+                }}
                 className="group relative overflow-hidden inline-flex items-center justify-center gap-3 bg-transparent border-2 border-white text-white px-10 py-4 rounded-full font-bold text-base lg:text-lg shadow-md hover:shadow-xl transition-all duration-300 ease-out hover:scale-110 hover:bg-white hover:text-[var(--royal-red)] active:scale-95 active:shadow-sm w-full sm:w-auto"
               >
                 <svg className="w-5 h-5 lg:w-6 lg:h-6 relative z-10 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -663,7 +739,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                 </svg>
                 <span className="relative z-10">Schedule Service</span>
                 <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </Link>
+              </button>
             </div>
 
             <p className={`text-white/60 text-xs lg:text-sm mt-6 lg:mt-8 transition-all duration-700 delay-300 ${ctaVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-8 blur-sm'}`}>
@@ -672,6 +748,162 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
           </div>
         </div>
       </section>
+
+      {/* Schedule Modal */}
+      {isScheduleModalOpen && (
+        <div className={`fixed inset-0 z-[1200] flex items-center justify-center p-4 sm:p-6 ${isScheduleModalClosing ? 'animate-modal-fade-out' : 'animate-modal-fade-in'}`}>
+          <div
+            className={`absolute inset-0 ${isScheduleModalClosing ? 'animate-backdrop-unblur' : 'animate-backdrop-blur'}`}
+            onClick={() => closeScheduleModal(true)}
+          />
+          <div className={`relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-3xl bg-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] border border-white/40 ${isScheduleModalClosing ? 'animate-modal-slide-down' : 'animate-modal-slide-up'}`}>
+            {!isScheduleSubmitted ? (
+              <>
+                <div className="bg-gradient-to-r from-[var(--royal-red)] to-[var(--royal-red-dark)] px-6 py-6 sm:px-8 sm:py-7">
+                  <button
+                    onClick={() => closeScheduleModal(true)}
+                    className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/20 text-white hover:bg-white/30 transition-all duration-200"
+                    aria-label="Close schedule form"
+                  >
+                    ✕
+                  </button>
+                  <p className="text-[var(--royal-gold)] text-xs font-semibold uppercase tracking-[0.16em] mb-2">
+                    {service.name} Service Request
+                  </p>
+                  <h2 className="text-white text-2xl sm:text-3xl font-bold leading-tight">Schedule Service</h2>
+                </div>
+
+                <form onSubmit={handleScheduleSubmit} className="px-6 py-6 sm:px-8 sm:py-8 space-y-7">
+                  <section className="space-y-4">
+                    <h3 className="text-lg font-bold text-[var(--royal-dark)]">1. Basic Contact Info (Required)</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <input
+                        required
+                        type="text"
+                        placeholder="Full Name"
+                        value={scheduleForm.fullName}
+                        onChange={(e) => setScheduleForm((prev) => ({ ...prev, fullName: e.target.value }))}
+                        className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
+                      />
+                      <input
+                        required
+                        type="tel"
+                        placeholder="Phone Number"
+                        value={scheduleForm.phone}
+                        onChange={(e) => setScheduleForm((prev) => ({ ...prev, phone: e.target.value }))}
+                        className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
+                      />
+                    </div>
+                    <input
+                      required
+                      type="email"
+                      placeholder="Email Address"
+                      value={scheduleForm.email}
+                      onChange={(e) => setScheduleForm((prev) => ({ ...prev, email: e.target.value }))}
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
+                    />
+                    <input
+                      required
+                      type="text"
+                      placeholder="Service Address"
+                      value={scheduleForm.serviceAddress}
+                      onChange={(e) => setScheduleForm((prev) => ({ ...prev, serviceAddress: e.target.value }))}
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
+                    />
+                  </section>
+
+                  <section className="space-y-3">
+                    <h3 className="text-lg font-bold text-[var(--royal-dark)]">2. Urgency Level</h3>
+                    <label className="flex items-center gap-3 text-gray-700">
+                      <input
+                        type="checkbox"
+                        checked={urgency === 'emergency'}
+                        onChange={() => setUrgency((prev) => (prev === 'emergency' ? '' : 'emergency'))}
+                        className="w-4 h-4 rounded border-gray-300 text-[var(--royal-red)] focus:ring-[var(--royal-red)]"
+                      />
+                      <span>Emergency (Same Day)</span>
+                    </label>
+                    <label className="flex items-center gap-3 text-gray-700">
+                      <input
+                        type="checkbox"
+                        checked={urgency === 'within-48'}
+                        onChange={() => setUrgency((prev) => (prev === 'within-48' ? '' : 'within-48'))}
+                        className="w-4 h-4 rounded border-gray-300 text-[var(--royal-red)] focus:ring-[var(--royal-red)]"
+                      />
+                      <span>Within 24-48 Hours</span>
+                    </label>
+                    <label className="flex items-center gap-3 text-gray-700">
+                      <input
+                        type="checkbox"
+                        checked={urgency === 'flexible'}
+                        onChange={() => setUrgency((prev) => (prev === 'flexible' ? '' : 'flexible'))}
+                        className="w-4 h-4 rounded border-gray-300 text-[var(--royal-red)] focus:ring-[var(--royal-red)]"
+                      />
+                      <span>Flexible Scheduling</span>
+                    </label>
+                  </section>
+
+                  <section className="space-y-3">
+                    <h3 className="text-lg font-bold text-[var(--royal-dark)]">3. Property Type</h3>
+                    <label className="flex items-center gap-3 text-gray-700">
+                      <input
+                        type="checkbox"
+                        checked={propertyTypes.includes('Residential')}
+                        onChange={() => togglePropertyType('Residential')}
+                        className="w-4 h-4 rounded border-gray-300 text-[var(--royal-red)] focus:ring-[var(--royal-red)]"
+                      />
+                      <span>Residential</span>
+                    </label>
+                    <label className="flex items-center gap-3 text-gray-700">
+                      <input
+                        type="checkbox"
+                        checked={propertyTypes.includes('Commercial')}
+                        onChange={() => togglePropertyType('Commercial')}
+                        className="w-4 h-4 rounded border-gray-300 text-[var(--royal-red)] focus:ring-[var(--royal-red)]"
+                      />
+                      <span>Commercial</span>
+                    </label>
+                  </section>
+
+                  <section className="space-y-3">
+                    <h3 className="text-lg font-bold text-[var(--royal-dark)]">4. Issue Description</h3>
+                    <textarea
+                      required
+                      rows={4}
+                      placeholder="Briefly describe the issue (strange noises, not cooling, leaking, etc.)"
+                      value={scheduleForm.issueDescription}
+                      onChange={(e) => setScheduleForm((prev) => ({ ...prev, issueDescription: e.target.value }))}
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
+                    />
+                  </section>
+
+                  <div className="pt-1">
+                    <button
+                      type="submit"
+                      className="inline-flex items-center justify-center bg-[var(--royal-red)] text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 hover:bg-[var(--royal-red-dark)] hover:scale-[1.02] active:scale-95"
+                    >
+                      Submit Request
+                    </button>
+                  </div>
+                </form>
+              </>
+            ) : (
+              <div className="px-8 py-14 text-center animate-[fadeInUp_0.35s_ease-out]">
+                <div className="w-16 h-16 rounded-full bg-[var(--royal-red)]/10 text-[var(--royal-red)] mx-auto flex items-center justify-center mb-5">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-bold text-[var(--royal-dark)] mb-3">Thank You!</h3>
+                <p className="text-gray-600 text-base sm:text-lg mb-2">
+                  We will reach out as soon as possible!
+                </p>
+                <p className="text-gray-500 text-sm">Closing in 5 seconds...</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="bg-[#141414] pt-8 lg:pt-14 pb-6 relative z-20">
