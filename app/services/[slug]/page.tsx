@@ -550,7 +550,24 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                 {service.name}
               </span>
               <h1 className={`text-3xl lg:text-5xl font-bold text-white mb-3 lg:mb-4 leading-tight whitespace-pre-line transition-all duration-700 delay-100 text-center lg:text-left ${heroVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-8 blur-sm'}`}>
-                {service.tagline}
+                {slug === 'heat-pump' ? (
+                  <>
+                    <span className="lg:hidden">All-Year Comfort, from a single system.</span>
+                    <span className="hidden lg:inline">{service.tagline}</span>
+                  </>
+                ) : slug === 'mini-split' && service.tagline === 'Efficient comfort without the ductwork.' ? (
+                  <>
+                    <span className="lg:hidden">Comfort without the ductwork.</span>
+                    <span className="hidden lg:inline">{service.tagline}</span>
+                  </>
+                ) : slug === 'indoor-air-quality' && service.tagline === 'Breathe cleaner, healthier air at home.' ? (
+                  <>
+                    <span className="lg:hidden">Breathe cleaner, Healthier air</span>
+                    <span className="hidden lg:inline">{service.tagline}</span>
+                  </>
+                ) : (
+                  service.tagline
+                )}
               </h1>
               <p className={`text-white/80 text-base lg:text-lg leading-relaxed mb-6 lg:mb-8 transition-all duration-700 delay-200 text-center lg:text-left ${heroVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-8 blur-sm'}`}>
                 {service.heroDescription}
@@ -657,7 +674,54 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                   {section.eyebrow}
                 </span>
                 <h2 className="text-xl lg:text-2xl font-bold text-[var(--royal-dark)] mb-4 whitespace-pre-line text-center lg:text-left">
-                  {section.title}
+                  {slug === 'furnaces' && section.title === 'Keep Your System Running Strong' ? (
+                    <>
+                      <span className="lg:hidden">Keep Your System Running</span>
+                      <span className="hidden lg:inline">Keep Your System Running Strong</span>
+                    </>
+                  ) : slug === 'furnaces' && section.title === 'Upgrade to Reliable, Efficient Heat' ? (
+                    <>
+                      <span className="lg:hidden">Upgrade for Reliable Heat</span>
+                      <span className="hidden lg:inline">Upgrade to Reliable, Efficient Heat</span>
+                    </>
+                  ) : slug === 'heat-pump' && section.title === 'Dependable Service for Every System' ? (
+                    <>
+                      <span className="lg:hidden">Service for Every System</span>
+                      <span className="hidden lg:inline">Dependable Service for Every System</span>
+                    </>
+                  ) : slug === 'mini-split' && section.title === 'Comfort Exactly Where You Need It' ? (
+                    <>
+                      <span className="lg:hidden">Comfort Where You Need It</span>
+                      <span className="hidden lg:inline">Comfort Exactly Where You Need It</span>
+                    </>
+                  ) : slug === 'water-heaters' && section.title === 'Dependable Service for Every System' ? (
+                    <>
+                      <span className="lg:hidden">Service for Every System</span>
+                      <span className="hidden lg:inline">Dependable Service for Every System</span>
+                    </>
+                  ) : slug === 'water-heaters' && section.title === 'Professional Setup from Start to Finish' ? (
+                    <>
+                      <span className="lg:hidden">Professional Setup, Start to Finish</span>
+                      <span className="hidden lg:inline">Professional Setup from Start to Finish</span>
+                    </>
+                  ) : slug === 'duct-cleaning' && section.title === 'The Tools That Make the Difference' ? (
+                    <>
+                      <span className="lg:hidden">Tools Make the Difference</span>
+                      <span className="hidden lg:inline">The Tools That Make the Difference</span>
+                    </>
+                  ) : slug === 'duct-cleaning' && section.title === 'What Clean Ducts Do for Your Home' ? (
+                    <>
+                      <span className="lg:hidden">What Clean Ducts Do for You</span>
+                      <span className="hidden lg:inline">What Clean Ducts Do for Your Home</span>
+                    </>
+                  ) : slug === 'indoor-air-quality' && section.title === 'Advanced Filtration & UV Treatment' ? (
+                    <>
+                      <span className="lg:hidden">Filtration &amp; UV Treatment</span>
+                      <span className="hidden lg:inline">Advanced Filtration &amp; UV Treatment</span>
+                    </>
+                  ) : (
+                    section.title
+                  )}
                 </h2>
                 <p className="text-gray-600 text-sm lg:text-base leading-relaxed mb-6 lg:mb-8 text-center lg:text-left">
                   {section.description}
@@ -752,12 +816,12 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
 
       {/* Schedule Modal */}
       {isScheduleModalOpen && (
-        <div className={`fixed inset-0 z-[1200] flex items-start sm:items-center justify-center p-3 sm:p-6 overflow-y-auto ${isScheduleModalClosing ? 'animate-modal-fade-out' : 'animate-modal-fade-in'}`}>
+        <div className={`fixed inset-0 z-[1200] flex items-start sm:items-center justify-center px-3 py-5 sm:p-6 overflow-y-auto ${isScheduleModalClosing ? 'animate-modal-fade-out' : 'animate-modal-fade-in'}`}>
           <div
             className={`absolute inset-0 bg-black/80 ${isScheduleModalClosing ? 'lg:animate-backdrop-unblur' : 'lg:animate-backdrop-blur'}`}
             onClick={() => closeScheduleModal(true)}
           />
-          <div className={`relative w-full max-w-2xl max-h-[calc(100dvh-1.5rem)] sm:max-h-[92vh] overflow-y-auto rounded-2xl sm:rounded-3xl bg-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] border border-white/40 ${isScheduleModalClosing ? 'animate-modal-slide-down' : 'animate-modal-slide-up'}`}>
+          <div className={`relative w-full max-w-2xl max-h-[calc(100dvh-4rem)] sm:max-h-[92vh] overflow-y-auto rounded-2xl sm:rounded-3xl bg-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] border border-white/40 ${isScheduleModalClosing ? 'animate-modal-slide-down' : 'animate-modal-slide-up'}`}>
             {!isScheduleSubmitted ? (
               <>
                 <div className="bg-gradient-to-r from-[var(--royal-red)] to-[var(--royal-red-dark)] px-6 py-6 sm:px-8 sm:py-7">

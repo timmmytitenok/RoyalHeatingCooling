@@ -163,7 +163,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex items-start sm:items-center justify-center px-3 py-3 sm:px-6 sm:py-6 overflow-y-auto ${
+      className={`fixed inset-0 z-[9999] flex items-start sm:items-center justify-center px-3 py-5 sm:px-6 sm:py-6 overflow-y-auto ${
         isClosing ? 'animate-modal-fade-out' : 'animate-modal-fade-in'
       }`}
     >
@@ -175,7 +175,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
       {/* Modal Content */}
       <div
-        className={`relative w-full max-w-2xl max-h-[calc(100dvh-1.5rem)] sm:max-h-[92vh] overflow-y-auto bg-white rounded-2xl sm:rounded-3xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] border border-white/40 ${
+        className={`relative w-full max-w-2xl max-h-[calc(100dvh-4rem)] sm:max-h-[92vh] overflow-y-auto bg-white rounded-2xl sm:rounded-3xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] border border-white/40 ${
           isClosing ? 'animate-modal-slide-down' : 'animate-modal-slide-up'
         }`}
       >
