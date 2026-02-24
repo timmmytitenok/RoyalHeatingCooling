@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '../components/Navbar';
 import { submitLead } from '../lib/submitLead';
+import { formatPhoneInput } from '../lib/phone';
 
 export default function Financing() {
   const [heroVisible, setHeroVisible] = useState(false);
@@ -397,8 +398,10 @@ export default function Financing() {
                       required
                       id="financing-phone"
                       type="tel"
+                      inputMode="numeric"
+                      maxLength={14}
                       value={financingForm.phone}
-                      onChange={(e) => setFinancingForm((prev) => ({ ...prev, phone: e.target.value }))}
+                      onChange={(e) => setFinancingForm((prev) => ({ ...prev, phone: formatPhoneInput(e.target.value) }))}
                       placeholder="(330) 555-1234"
                       className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
                     />

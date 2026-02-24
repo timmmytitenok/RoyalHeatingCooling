@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { submitLead } from '../lib/submitLead';
+import { formatPhoneInput } from '../lib/phone';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -85,9 +86,10 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    const nextValue = name === 'phone' ? formatPhoneInput(value) : value;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: nextValue
     }));
     if (errors[name as keyof typeof errors]) {
       setErrors(prev => ({
@@ -251,6 +253,8 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   type="tel"
                   id="phone"
                   name="phone"
+                  inputMode="numeric"
+                  maxLength={14}
                   value={formData.phone}
                   onChange={handleChange}
                   className={`w-full rounded-xl border px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)] ${

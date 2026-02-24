@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { submitLead } from '../lib/submitLead';
+import { formatPhoneInput } from '../lib/phone';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -25,9 +26,10 @@ export default function ContactPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    const nextValue = name === 'phone' ? formatPhoneInput(value) : value;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: nextValue
     }));
     // Clear error when user starts typing
     if (errors[name as keyof typeof errors]) {
@@ -221,6 +223,8 @@ export default function ContactPage() {
                   type="tel"
                   id="phone"
                   name="phone"
+                  inputMode="numeric"
+                  maxLength={14}
                   value={formData.phone}
                   onChange={handleChange}
                   className={`w-full px-4 py-3 border ${

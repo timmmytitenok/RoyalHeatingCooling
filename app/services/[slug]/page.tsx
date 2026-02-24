@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '../../components/Navbar';
 import { submitLead } from '../../lib/submitLead';
+import { formatPhoneInput } from '../../lib/phone';
 
 type UrgencyOption = 'emergency' | 'within-48' | 'flexible' | '';
 
@@ -870,9 +871,11 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                       <input
                         required
                         type="tel"
+                        inputMode="numeric"
+                        maxLength={14}
                         placeholder="Phone Number"
                         value={scheduleForm.phone}
-                        onChange={(e) => setScheduleForm((prev) => ({ ...prev, phone: e.target.value }))}
+                        onChange={(e) => setScheduleForm((prev) => ({ ...prev, phone: formatPhoneInput(e.target.value) }))}
                         className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
                       />
                     </div>

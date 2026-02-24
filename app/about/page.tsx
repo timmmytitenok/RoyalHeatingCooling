@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import { submitLead } from '../lib/submitLead';
+import { formatPhoneInput } from '../lib/phone';
 
 export default function AboutPage() {
   const [heroVisible, setHeroVisible] = useState(false);
@@ -719,8 +720,10 @@ export default function AboutPage() {
                       required
                       id="about-schedule-phone"
                       type="tel"
+                      inputMode="numeric"
+                      maxLength={14}
                       value={scheduleForm.phone}
-                      onChange={(e) => setScheduleForm((prev) => ({ ...prev, phone: e.target.value }))}
+                      onChange={(e) => setScheduleForm((prev) => ({ ...prev, phone: formatPhoneInput(e.target.value) }))}
                       placeholder="(330) 555-1234"
                       className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)]/30 focus:border-[var(--royal-red)]"
                     />
@@ -820,8 +823,10 @@ export default function AboutPage() {
               <label className="block text-xs font-medium text-gray-600 mb-1">Phone Number</label>
               <input
                 type="tel"
+                inputMode="numeric"
+                maxLength={14}
                 value={contactForm.phone}
-                onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })}
+                onChange={(e) => setContactForm({ ...contactForm, phone: formatPhoneInput(e.target.value) })}
                 placeholder="(330) 555-1234"
                 className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)] focus:border-transparent transition-all"
               />
