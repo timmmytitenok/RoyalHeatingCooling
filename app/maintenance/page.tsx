@@ -575,7 +575,10 @@ export default function MaintenancePlan() {
                   <p className="text-[var(--royal-gold)] text-xs font-semibold uppercase tracking-[0.16em] mb-2">
                     Royal Comfort Plan
                   </p>
-                  <h2 className="text-white text-2xl sm:text-3xl font-bold leading-tight">Become a Royal Member</h2>
+                  <h2 className="text-white text-2xl sm:text-3xl font-bold leading-tight">
+                    <span className="lg:hidden">Become a Member</span>
+                    <span className="hidden lg:inline">Become a Royal Member</span>
+                  </h2>
                 </div>
 
                 <form

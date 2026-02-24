@@ -552,7 +552,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
               <h1 className={`text-3xl lg:text-5xl font-bold text-white mb-3 lg:mb-4 leading-tight whitespace-pre-line transition-all duration-700 delay-100 text-center lg:text-left ${heroVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-8 blur-sm'}`}>
                 {slug === 'heat-pump' ? (
                   <>
-                    <span className="lg:hidden">All-Year Comfort, from a single system.</span>
+                    <span className="lg:hidden">All-Year comfort, from a system.</span>
                     <span className="hidden lg:inline">{service.tagline}</span>
                   </>
                 ) : slug === 'mini-split' && service.tagline === 'Efficient comfort without the ductwork.' ? (
@@ -701,7 +701,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                     </>
                   ) : slug === 'water-heaters' && section.title === 'Professional Setup from Start to Finish' ? (
                     <>
-                      <span className="lg:hidden">Professional Setup, Start to Finish</span>
+                      <span className="lg:hidden">Professional from Start to Finihs</span>
                       <span className="hidden lg:inline">Professional Setup from Start to Finish</span>
                     </>
                   ) : slug === 'duct-cleaning' && section.title === 'The Tools That Make the Difference' ? (
@@ -833,7 +833,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                     ✕
                   </button>
                   <p className="text-[var(--royal-gold)] text-xs font-semibold uppercase tracking-[0.16em] mb-2">
-                    {service.name} Service Request
+                    {service.name}
                   </p>
                   <h2 className="text-white text-2xl sm:text-3xl font-bold leading-tight">Schedule Service</h2>
                 </div>

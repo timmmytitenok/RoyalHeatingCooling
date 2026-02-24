@@ -702,7 +702,10 @@ export default function Home() {
                   <p className="text-[var(--royal-gold)] text-xs font-semibold uppercase tracking-[0.16em] mb-2">
                     Schedule Service
                   </p>
-                  <h2 className="text-white text-2xl sm:text-3xl font-bold leading-tight">Book Your Service Request</h2>
+                  <h2 className="text-white text-2xl sm:text-3xl font-bold leading-tight">
+                    <span className="lg:hidden">Service Request</span>
+                    <span className="hidden lg:inline">Book Your Service Request</span>
+                  </h2>
                 </div>
 
                 <form
