@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { submitLead } from '../lib/submitLead';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ export default function ContactPage() {
     firstName: '',
     lastName: '',
     phone: '',
+    email: '',
     description: ''
   });
 
@@ -41,6 +43,7 @@ export default function ContactPage() {
       firstName: '',
       lastName: '',
       phone: '',
+      email: '',
       description: ''
     };
 
@@ -69,6 +72,14 @@ export default function ContactPage() {
       isValid = false;
     }
 
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+      isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      newErrors.email = 'Please enter a valid email';
+      isValid = false;
+    }
+
     setErrors(newErrors);
     return isValid;
   };
@@ -82,25 +93,31 @@ export default function ContactPage() {
 
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    console.log('Form submitted:', formData);
-    
-    setSubmitSuccess(true);
-    setIsSubmitting(false);
-
-    // Reset form after success
-    setTimeout(() => {
-      setFormData({
-        firstName: '',
-        lastName: '',
-        phone: '',
-        email: '',
-        description: ''
+    try {
+      await submitLead({
+        formType: 'Contact Page',
+        fullName: `${formData.firstName} ${formData.lastName}`.trim(),
+        phone: formData.phone,
+        email: formData.email,
+        description: formData.description,
       });
-      setSubmitSuccess(false);
-    }, 3000);
+      setSubmitSuccess(true);
+      setTimeout(() => {
+        setFormData({
+          firstName: '',
+          lastName: '',
+          phone: '',
+          email: '',
+          description: '',
+        });
+        setSubmitSuccess(false);
+      }, 3000);
+    } catch (error) {
+      console.error(error);
+      window.alert('Unable to send request right now. Please call us at (330) 662-1123.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -216,10 +233,10 @@ export default function ContactPage() {
                 )}
               </div>
 
-              {/* Email (Optional) */}
+              {/* Email */}
               <div>
                 <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-                  Email <span className="text-gray-400 text-xs">(Optional)</span>
+                  Email <span className="text-[var(--royal-red)]">*</span>
                 </label>
                 <input
                   type="email"
@@ -230,6 +247,9 @@ export default function ContactPage() {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--royal-red)] focus:border-transparent transition-all"
                   placeholder="john.doe@example.com"
                 />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                )}
               </div>
 
               {/* Description */}

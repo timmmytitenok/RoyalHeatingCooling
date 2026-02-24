@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { submitLead } from '../lib/submitLead';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -146,17 +147,24 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     }
 
     setIsSubmitting(true);
-
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    console.log('Form submitted:', formData);
-    
-    setSubmitSuccess(true);
-    setIsSubmitting(false);
-
-    setTimeout(() => {
-      handleClose();
-    }, 2000);
+    try {
+      await submitLead({
+        formType: 'Contact Request',
+        fullName: formData.fullName,
+        phone: formData.phone,
+        email: formData.email,
+        description: formData.description,
+      });
+      setSubmitSuccess(true);
+      setTimeout(() => {
+        handleClose();
+      }, 2000);
+    } catch (error) {
+      console.error(error);
+      window.alert('Unable to send request right now. Please call us at (330) 662-1123.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (!shouldRender) return null;

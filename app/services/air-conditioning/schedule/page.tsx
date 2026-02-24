@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { submitLead } from '../../../lib/submitLead';
 
 type UrgencyOption = 'emergency' | 'within-48' | 'flexible' | '';
 
@@ -39,9 +40,25 @@ export default function AirConditioningSchedulePage() {
     );
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    try {
+      await submitLead({
+        formType: 'Air Conditioning Schedule Page',
+        service: 'Air Conditioning',
+        fullName: formData.fullName,
+        phone: formData.phone,
+        email: formData.email,
+        serviceAddress: formData.serviceAddress,
+        issueDescription: formData.issueDescription,
+        urgency,
+        propertyTypes,
+      });
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error(error);
+      window.alert('Unable to send request right now. Please call us at (330) 662-1123.');
+    }
   };
 
   return (

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '../components/Navbar';
+import { submitLead } from '../lib/submitLead';
 
 export default function MaintenancePlan() {
   const [heroVisible, setHeroVisible] = useState(false);
@@ -104,6 +105,22 @@ export default function MaintenancePlan() {
       setIsMemberSubmitted(false);
       resetMemberForm();
     }, 400);
+  };
+
+  const handleMemberSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await submitLead({
+        formType: 'Royal Member Signup',
+        fullName: memberForm.fullName,
+        phone: memberForm.phone,
+        email: memberForm.email,
+      });
+      setIsMemberSubmitted(true);
+    } catch (error) {
+      console.error(error);
+      window.alert('Unable to send request right now. Please call us at (330) 662-1123.');
+    }
   };
 
   useEffect(() => {
@@ -581,13 +598,7 @@ export default function MaintenancePlan() {
                   </h2>
                 </div>
 
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setIsMemberSubmitted(true);
-                  }}
-                  className="px-6 py-6 sm:px-8 sm:py-8 space-y-6"
-                >
+                <form onSubmit={handleMemberSubmit} className="px-6 py-6 sm:px-8 sm:py-8 space-y-6">
                   <div>
                     <label htmlFor="member-full-name" className="block text-sm font-semibold text-gray-700 mb-2">
                       Full Name <span className="text-[var(--royal-red)]">*</span>

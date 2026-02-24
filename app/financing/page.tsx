@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '../components/Navbar';
+import { submitLead } from '../lib/submitLead';
 
 export default function Financing() {
   const [heroVisible, setHeroVisible] = useState(false);
@@ -104,6 +105,22 @@ export default function Financing() {
       setIsFinancingSubmitted(false);
       resetFinancingForm();
     }, 400);
+  };
+
+  const handleFinancingSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await submitLead({
+        formType: 'Financing Request',
+        fullName: financingForm.fullName,
+        phone: financingForm.phone,
+        email: financingForm.email,
+      });
+      setIsFinancingSubmitted(true);
+    } catch (error) {
+      console.error(error);
+      window.alert('Unable to send request right now. Please call us at (330) 662-1123.');
+    }
   };
 
   useEffect(() => {
@@ -356,13 +373,7 @@ export default function Financing() {
                   </h2>
                 </div>
 
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setIsFinancingSubmitted(true);
-                  }}
-                  className="px-6 py-6 sm:px-8 sm:py-8 space-y-6"
-                >
+                <form onSubmit={handleFinancingSubmit} className="px-6 py-6 sm:px-8 sm:py-8 space-y-6">
                   <div>
                     <label htmlFor="financing-full-name" className="block text-sm font-semibold text-gray-700 mb-2">
                       Full Name <span className="text-[var(--royal-red)]">*</span>

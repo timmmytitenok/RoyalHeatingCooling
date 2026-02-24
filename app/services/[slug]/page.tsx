@@ -4,6 +4,7 @@ import { use, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '../../components/Navbar';
+import { submitLead } from '../../lib/submitLead';
 
 type UrgencyOption = 'emergency' | 'within-48' | 'flexible' | '';
 
@@ -29,7 +30,7 @@ const servicesData: Record<string, {
     tagline: 'Dependable heat for every Ohio winter.',
     heroDescription: "Your furnace is the heart of your home's comfort. We provide expert maintenance, fast repairs, and professional installations — all with clear pricing and no pressure.",
     heroImageLeft: false,
-    heroImage: '/furnace-hero-new2.png',
+    heroImage: '/furnace-hero-winter-new.png',
     sections: [
       {
         eyebrow: 'Preventive Heating Maintenance',
@@ -58,7 +59,7 @@ const servicesData: Record<string, {
           'Full system testing and calibration',
           'Walkthrough of your new system and warranty',
         ],
-        image: '/furnace-upgrade-efficient-new.png',
+        image: '/furnace-upgrade-efficient-new2.png',
       },
       {
         eyebrow: 'Furnace Repair & Diagnostics',
@@ -71,7 +72,7 @@ const servicesData: Record<string, {
           'Cracked heat exchangers',
           'Clogged filters and airflow restrictions',
         ],
-        image: '/furnace-section4-new.jpg',
+        image: '/furnace-fast-fixes-new.png',
       },
     ],
     trustPoints: ['Same-day emergency service', 'Upfront pricing always', 'All major brands', 'Licensed technicians'],
@@ -140,7 +141,7 @@ const servicesData: Record<string, {
           'Quiet, consistent temperature control',
           'Reduced carbon footprint',
         ],
-        image: '/heat-pump-service-section.jpg',
+        image: '/heat-pump-service-system-new.png',
       },
       {
         eyebrow: 'Heat Pump Maintenance',
@@ -472,9 +473,25 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
     );
   };
 
-  const handleScheduleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleScheduleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsScheduleSubmitted(true);
+    try {
+      await submitLead({
+        formType: `${service.name} Request`,
+        service: service.name,
+        fullName: scheduleForm.fullName,
+        phone: scheduleForm.phone,
+        email: scheduleForm.email,
+        serviceAddress: scheduleForm.serviceAddress,
+        issueDescription: scheduleForm.issueDescription,
+        urgency,
+        propertyTypes,
+      });
+      setIsScheduleSubmitted(true);
+    } catch (error) {
+      console.error(error);
+      window.alert('Unable to send request right now. Please call us at (330) 662-1123.');
+    }
   };
 
   const resetScheduleForm = () => {

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
+import { submitLead } from '../lib/submitLead';
 
 export default function AboutPage() {
   const [heroVisible, setHeroVisible] = useState(false);
@@ -138,6 +139,23 @@ export default function AboutPage() {
       setIsScheduleSubmitted(false);
       resetScheduleForm();
     }, 400);
+  };
+
+  const handleScheduleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await submitLead({
+        formType: 'About Schedule',
+        fullName: scheduleForm.fullName,
+        phone: scheduleForm.phone,
+        email: scheduleForm.email,
+        service: scheduleForm.service,
+      });
+      setIsScheduleSubmitted(true);
+    } catch (error) {
+      console.error(error);
+      window.alert('Unable to send request right now. Please call us at (330) 662-1123.');
+    }
   };
 
   useEffect(() => {
@@ -677,13 +695,7 @@ export default function AboutPage() {
                   </h2>
                 </div>
 
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setIsScheduleSubmitted(true);
-                  }}
-                  className="px-6 py-6 sm:px-8 sm:py-8 space-y-6"
-                >
+                <form onSubmit={handleScheduleSubmit} className="px-6 py-6 sm:px-8 sm:py-8 space-y-6">
                   <div>
                     <label htmlFor="about-schedule-full-name" className="block text-sm font-semibold text-gray-700 mb-2">
                       Full Name <span className="text-[var(--royal-red)]">*</span>
