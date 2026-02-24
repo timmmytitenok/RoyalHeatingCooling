@@ -3,8 +3,6 @@ import { Resend } from 'resend';
 
 export const runtime = 'nodejs';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 type LeadBody = {
   formType?: string;
   fullName?: string;
@@ -30,15 +28,18 @@ function escapeHtml(value: unknown): string {
 
 export async function POST(request: Request) {
   try {
+    const apiKey = process.env.RESEND_API_KEY;
     const fromEmail = process.env.LEADS_FROM_EMAIL || 'onboarding@resend.dev';
     const toEmail = process.env.LEADS_TO_EMAIL;
 
-    if (!process.env.RESEND_API_KEY || !toEmail) {
+    if (!apiKey || !toEmail) {
       return NextResponse.json(
         { message: 'Server email configuration is incomplete.' },
         { status: 500 }
       );
     }
+
+    const resend = new Resend(apiKey);
 
     const body = (await request.json()) as LeadBody;
 
