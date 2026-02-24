@@ -701,7 +701,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                     </>
                   ) : slug === 'water-heaters' && section.title === 'Professional Setup from Start to Finish' ? (
                     <>
-                      <span className="lg:hidden">Professional from Start to Finihs</span>
+                      <span className="lg:hidden">Professional from Start to Finish</span>
                       <span className="hidden lg:inline">Professional Setup from Start to Finish</span>
                     </>
                   ) : slug === 'duct-cleaning' && section.title === 'The Tools That Make the Difference' ? (
